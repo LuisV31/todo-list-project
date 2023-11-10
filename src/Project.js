@@ -9,7 +9,10 @@ export default class Project {
     }
 
     removeTodo(todoTitle) {
-        this.todos = this.todos.filter(todo => todo.title !== todoTitle);
+        const index = this.todos.findIndex(todo => todo.title === todoTitle);
+        if (index !== -1) {
+            this.todos.splice(index, 1);
+        }
     }
 
     getTodo(todoTitle) {
@@ -18,5 +21,12 @@ export default class Project {
 
     getTodos() {
         return this.todos;
+    }
+
+    updateTodo(todoTitle, updateProperties) {
+        const todo = this.getTodo(todoTitle);
+        if (todo) {
+            todo.editTodoDetails(updateProperties);
+        }
     }
 }
