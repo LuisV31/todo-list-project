@@ -37,6 +37,13 @@ const addProject = () => {
 
 document.addEventListener('DOMContentLoaded', () => {
     renderProjects();
+    const addProjectButton = document.getElementById('add-project-btn');
+    if (addProjectButton) {
+        addProjectButton.addEventListener('click', addProject);
+    } else {
+        console.error("Add project button not found");
+    }
 });
+
 
 document.getElementById('add-project-btn').addEventListener('click', addProject)

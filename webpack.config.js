@@ -10,8 +10,28 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             title: 'My Todo App',
-            template: 'src/index.html'
+            template: './src/index.html'
         })
     ],
+    module: {
+        rules: [
+            {
+                test: /\.(png|jpg|gif|svg|webp)$/, // Add a rule for image files
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: '[name].[ext]', // Keep the original file name and extension
+                            outputPath: 'images/', // Output images to an 'images' folder in the dist directory
+                        },
+                    },
+                ],
+            },
+            {
+                test: /\.css$/, 
+                use: ['style-loader', 'css-loader'],
+            },
+        ],
+    },
     mode: 'development'
 };

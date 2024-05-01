@@ -2,59 +2,53 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Todo List</title>
-    <!-- <link rel="stylesheet" href="styles.css"> -->
-    <script defer src="dist/bundle.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Todo list</title>
 </head>
 <body>
 
-<div class="container">
-
-    <!-- Project List -->
-    <section class="project-section">
+<div class="app-container">
+    <!-- Sidebar for Projects -->
+    <aside class="sidebar">
         <h2>Projects</h2>
         <ul id="project-list">
             <!--Projects will be dynamicaly added here-->
         </ul>
         <button id="add-project">Add Project</button>
-    </section>
+    </aside>
 
-    <!-- Todo List for selected project-->
-    <section class="todo-section">
-        <h2>Todo for Selected Project</h2>
+    <!-- Main content area for Todos -->
+    <main class="main-content">
+        <h2 id="project-title">Selected Project</h2>
         <ul id="todo-list">
             <!-- Todo will be dynamically added here-->
         </ul>
 
-        <!-- Todo Form -->
         <form id="todo-form">
             <input type="text" id="todo-title" placeholder="Todo Title" required>
             <textarea id="todo-description" placeholder="Description"></textarea>
-            <input type="date" id="todo-due-date" placeholder="Due Date">
-
-            <!-- Priority Dropdown -->
+            <input type="date" id="todo-due-date">
             <select id="todo-priority">
                 <option value="low">Low</option>
                 <option value="medium">Medium</option>
                 <option value="high">High</option>
             </select>
-
             <button type="submit">Add Todo</button>
         </form>
-    </section>
+    </main>
 
     <!-- Advanced Filters Sections -->
-    <section class="filter-section">
+    <!-- <section class="filter-section">
         <h2>Advanced Filter</h2>
         <form id="filter-form">
             <input type="text" id="search-term" placeholder="Search Todo"> 
 
-            <!-- Date range Filtering -->
-            <input type="date" id="start-date" placeholder="Start Date">
-            <input type="date" id="end-date" placeholder="End Date">
+            <-- Date range Filtering -->
+            <!-- <input type="date" id="start-date" placeholder="Start Date">
+            <input type="date" id="end-date" placeholder="End Date"> -->
 
             <!-- Priority Dropdown for filtering -->
-            <select id="filter-priority">
+            <!-- <select id="filter-priority">
                 <option value="all">All Priorities</option>
                 <option value="low">Low</option>
                 <option value="medium">Medium</option>
@@ -62,8 +56,8 @@
             </select>
 
             <button type="submit">Filter</button>
-        </form>
-    </section>
+        </form> -->
+    <!-- </section> --> 
     
 </div>
  
