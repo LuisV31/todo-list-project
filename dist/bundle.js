@@ -10,43 +10,33 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./src/Project.js":
-/*!************************!*\
-  !*** ./src/Project.js ***!
-  \************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ Project)\n/* harmony export */ });\nclass Project {\n    constructor(name) {\n        this.name = name;\n        this.todos = [];\n    }\n\n    addTodo(todo) {\n        this.todos.push(todo);\n    }\n\n    removeTodo(todoTitle) {\n        this.todos = this.todos.filter(todo => todo.title !== todoTitle);\n    }\n\n    getTodo(todoTitle) {\n        return this.todos.find(todo => todo.title === todoTitle);\n    }\n\n    getTodos() {\n        return this.todos;\n    }\n}\n\n\n//# sourceURL=webpack://todo-list-project/./src/Project.js?");
-
-/***/ }),
-
-/***/ "./src/Todo.js":
-/*!*********************!*\
-  !*** ./src/Todo.js ***!
-  \*********************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ Todo)\n/* harmony export */ });\nclass Todo {\n    constructor(title, description, dueDate, priority) {\n        this.title = title;\n        this.description = description;\n        this.dueDate = dueDate;\n        this.priority = priority;\n        this.notes = '';\n        this.checklist = [];\n    }\n\n    addNote(note) {\n        this.notes = note;\n    }\n\n    addTaskToChecklist(task) {\n        this.checklist.push({ task: task, done: false });\n    }\n\n    markTaskAsDone(task) {\n        const taskItem = this.checklist.find(item => item.task === task);\n        if (taskItem) {\n            taskItem.done = true;\n        }\n    }\n\n}\n\n\n//# sourceURL=webpack://todo-list-project/./src/Todo.js?");
-
-/***/ }),
-
 /***/ "./src/index.js":
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _ui_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ui.js */ \"./src/ui.js\");\n/* harmony import */ var _Todo_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Todo.js */ \"./src/Todo.js\");\n/* harmony import */ var _projectManager_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./projectManager.js */ \"./src/projectManager.js\");\n/* harmony import */ var _Project__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Project */ \"./src/Project.js\");\n // Where the DOM manipulations and event listeners are\n // Todo class definition.\n // this has createProject function.\n\n\n// Instantiate a default project\nconst defaultProject = new _Project__WEBPACK_IMPORTED_MODULE_3__[\"default\"]('Default');\n\n// Initialize selected project\nlet selectedProject = defaultProject;\n\n\n// Function to change seleceted project (this could be caled based on user input)\nfunction changeSelectedProject(newProject) {\n    selectedProject = newProject;\n}\n\n//# sourceURL=webpack://todo-list-project/./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _ui_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ui.js */ \"./src/ui.js\");\n // Where the DOM manipulations and event listeners are\n\n\n//# sourceURL=webpack://todo-list-project/./src/index.js?");
 
 /***/ }),
 
-/***/ "./src/projectManager.js":
-/*!*******************************!*\
-  !*** ./src/projectManager.js ***!
-  \*******************************/
+/***/ "./src/logic/Project.js":
+/*!******************************!*\
+  !*** ./src/logic/Project.js ***!
+  \******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   createProject: () => (/* binding */ createProject)\n/* harmony export */ });\n/* harmony import */ var _Project__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Project */ \"./src/Project.js\");\n\n\nfunction createProject(name) {\n    return new _Project__WEBPACK_IMPORTED_MODULE_0__[\"default\"](name);\n}\n\n//# sourceURL=webpack://todo-list-project/./src/projectManager.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ Project)\n/* harmony export */ });\nclass Project {\n    constructor(name) {\n        this.name = name;\n        this.todos = [];\n    }\n\n    addTodo(todo) {\n        this.todos.push(todo);\n    }\n    \n    removeTodo(todo) {\n       this.todos = this.todos.filter(t => t !== todo);\n    }\n\n    // View all todos in each project\n    getTodos() {\n        return this.todos;\n    }\n\n    // updateTodo(todoTitle, updateProperties) {\n    //     const todo = this.getTodo(todoTitle);\n    //     if (todo) {\n    //         todo.editTodoDetails(updateProperties);\n    //     }\n    // }\n}\n\n\n//# sourceURL=webpack://todo-list-project/./src/logic/Project.js?");
+
+/***/ }),
+
+/***/ "./src/logic/projectManager.js":
+/*!*************************************!*\
+  !*** ./src/logic/projectManager.js ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _Project__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Project */ \"./src/logic/Project.js\");\n\n\nclass ProjectManager {\n    constructor() {\n        this.projects = [];\n        this.createDefaultProject();\n    }\n\n    createDefaultProject() {\n        this.addProject(\"Default\");\n    }\n\n    addProject(name) {\n    if (!name || typeof name !== 'string' || this.findProjectByName(name)) {\n        console.error(\"Project name must be unique and valid string.\");\n        return;\n    }\n    const newProject = new _Project__WEBPACK_IMPORTED_MODULE_0__[\"default\"](name);\n    this.projects.push(newProject);\n    }\n    \n    findProjectByName(name) {\n        return this.projects.find(project => project.name === name);\n    }\n    \n    // View all projects//\n    getProjects() {\n        return this.projects;\n    }\n\n    removeProject(name) {\n        const projectIndex = this.projects.findIndex(project => project.name === name);\n        if (projectIndex !== -1) {\n            this.projects.splice(projectIndex, 1);\n            return true;\n        }\n        return false;\n    }\n\n    updateProjectName(oldName, newName) {\n        const project = this.findProjectByName(oldName);\n        if (project && !this.findProjectByName(newName)) {\n            project.name = newName;\n            return true;\n        }\n        return false;\n    }\n\n}\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ProjectManager);\n\n//# sourceURL=webpack://todo-list-project/./src/logic/projectManager.js?");
 
 /***/ }),
 
@@ -56,7 +46,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
   \*******************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _projectManager__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./projectManager */ \"./src/projectManager.js\");\n/* harmony import */ var _Todo__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Todo */ \"./src/Todo.js\");\n\n\n\ndocument.addEventListener('DOMContentLoaded', () => {\n    setupCreateProjectButton();\n    setupTodoForm();\n});\n\nfunction setupCreateProjectButton() {\n    const createProjectButton = document.getElementById('create-project-button');\n    const projectList = document.getElementById('project-list');\n\n    createProjectButton.addEventListener('click', () => {\n        const projectName = prompt(\"Enter project name:\");\n        if (projectName) {\n            const newProject = (0,_projectManager__WEBPACK_IMPORTED_MODULE_0__.createProject)(projectName);\n            const projectElement = createProjectElement(newProject);\n            projectList.appendChild(projectElement);\n        }\n    });\n}\n\nfunction createProjectElement(project) {\n    console.log(\"creating new project element for:\", project.name);\n    const projectElement = document.createElement('div');\n    projectElement.textContent = project.name;\n\n    projectElement.addEventListener('click', () => {\n        handleProjectSelection(project);\n    });\n\n    return projectElement;\n}\n\nfunction handleProjectSelection(selectedProject) {\n    //implemet here//\n}\n\nfunction setupTodoForm() {\n    const todoForm = document.getElementById('todo-form');\n\n    todoForm.addEventListener('submit', event => {\n        event.preventDefault();\n        const selectedProject = getSelectedProject();\n        if (selectedProject) {\n            const newTodo = createNewTodo();\n            selectedProject.addTodo(newTodo);\n            // Optionally, update the UI here.\n        } else {\n            alert('Please select a project first');\n        }\n    });\n}\n\nfunction createNewTodo() {\n    const title = document.getElementById('todo-title').value;\n    const description = document.getElementById('todo-description').value;\n    const dueDate = document.getElementById('todo-dueDate').value;\n    const priority = document.getElementById('todo-priority').value;\n\n    return new _Todo__WEBPACK_IMPORTED_MODULE_1__[\"default\"](title, description, dueDate, priority);\n}\n\nfunction getSelectedProject() {\n    // Implement this function to treturn the currently selected project.\n    // This could involve retrieveing a reference to the project from a variable,\n    // or identifiying the selected project from the DOM\n}\n\n//# sourceURL=webpack://todo-list-project/./src/ui.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _logic_projectManager_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./logic/projectManager.js */ \"./src/logic/projectManager.js\");\n\n\nconst projectManager = new _logic_projectManager_js__WEBPACK_IMPORTED_MODULE_0__[\"default\"]();\n\n// Function to render all projects\n\nconst renderProjects = () => {\n    const projectContainer = document.getElementById('project-list');\n    projectContainer.innerHTML = '';\n    projectManager.getProjects().forEach(project => {\n        const projectElement = document.createElement('li');\n        projectElement.textContent = project.name;\n        projectElement.addEventListener('click', () => selectProject(project));\n        projectContainer.appendChild(projectElement);\n    });\n};\n\nconst selectProject = project => {\n    const todoContainer = document.getElementById('todo-list');\n    todoContainer.innerHTML = '';\n    project.getTodos().forEach(todo => {\n        const todoElement = document.createElement('div');\n        todoElement.textContent = `${todo.title} - Due: ${todo.dueDate}`;\n        todoContainer.appendChild(todoElement);\n    });\n};\n\nconst addProject = () => {\n    const projectNameInput = document.getElementById('new-project-name');\n    const projectName = projectNameInput.value;\n    if (projectName) {\n        projectManager.addProject(projectName);\n        renderProjects();\n        projectNameInput.value = '';\n    }\n};\n\ndocument.addEventListener('DOMContentLoaded', () => {\n    renderProjects();\n});\n\ndocument.getElementById('add-project-btn').addEventListener('click', addProject)\n\n//# sourceURL=webpack://todo-list-project/./src/ui.js?");
 
 /***/ })
 
