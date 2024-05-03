@@ -3,20 +3,23 @@ import Project from "./Project";
 class ProjectManager {
     constructor() {
         this.projects = [];
+        this.currentProject = null;
         this.createDefaultProject();
     }
 
     createDefaultProject() {
-        this.addProject("Default");
+        const defaultProject = new Project("default");
+        this.addProject(defaultProject);
+        this.currentProject = defaultProject;
     }
 
-    addProject(name) {
-    if (!name || typeof name !== 'string' || this.findProjectByName(name)) {
+    addProject(project) {
+    if (!project.name || typeof project.name !== 'string' || this.findProjectByName(project.name)) {
         console.error("Project name must be unique and valid string.");
         return;
     }
-    const newProject = new Project(name);
-    this.projects.push(newProject);
+    this.projects.push(project);
+    this.currentProject = project;
     }
     
     findProjectByName(name) {
@@ -32,6 +35,10 @@ class ProjectManager {
         const projectIndex = this.projects.findIndex(project => project.name === name);
         if (projectIndex !== -1) {
             this.projects.splice(projectIndex, 1);
+            // If the current project is the one being removed, set currentProject to null or another project
+            if (this.currentProject && this.currentProject.name === name) {
+                this.currentProject = this.projects[0] || null;
+            }
             return true;
         }
         return false;
@@ -44,6 +51,17 @@ class ProjectManager {
             return true;
         }
         return false;
+    }
+
+    setCurrentProject(name) {
+        const project = this.findProjectByName(name);
+        if (project) {
+            this.currentProject = project;
+        }
+    }
+
+    getCurrentProject() {
+        return this.currentProject;
     }
 
 }
