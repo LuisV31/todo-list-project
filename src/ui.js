@@ -12,8 +12,6 @@ class TodoApp {
         this.toggleModal = this.toggleModal.bind(this);
         this.addProjectToUI = this.addProjectToUI.bind(this);
         this.addTodoToUI = this.addTodoToUI.bind(this);
-
-        document.addEventListener('DOMContentLoaded', () => this.init());
     }
 
     init() {
@@ -22,15 +20,26 @@ class TodoApp {
     }
 
     addEventListeners() {
-        document.getElementById('project-list').addEventListener('click', this.handleProjectClick);
-        document.getElementById('add-project').addEventListener('click', this.toggleModal);
-        document.getElementById('confirm-add-project').addEventListener('click', this.addProjectToUI);
-        document.getElementById('close-button').addEventListener('click',this.toggleModal);
+        // Project interactions
+        document.getElementById('add-project').addEventListener('click', () => this.toggleModal('project-modal', true));
+        document.getElementById('confirm-add-project').addEventListener('click', () => {
+            this.addProjectToUI();
+            this.toggleModal('project-modal', false); // Close modal explicitly here
+        });
+        document.getElementById('close-project-modal').addEventListener('click', () => this.toggleModal('project-modal', false));
+    
+        // Todo interactions
+        document.getElementById('add-todo').addEventListener('click', () => this.toggleModal('todo-modal', true));
+        document.getElementById('close-todo-modal').addEventListener('click', () => this.toggleModal('todo-modal', false));
+    
+        // Only handle adding a todo through form submission to prevent duplication
         document.getElementById('todo-form').addEventListener('submit', (event) => {
             event.preventDefault();
             this.addTodoToUI();
+            this.toggleModal('todo-modal', false); // Close modal right after adding
         });
     }
+    
 
     renderProjects() {
         const projectContainer = document.getElementById('project-list');
@@ -57,18 +66,19 @@ class TodoApp {
         this.updateProjectDisplay();
     }
 
-    toggleModal() {
-        const modal = document.getElementById('project-modal');
-        modal.style.display = modal.style.display === 'none' ? 'block' : 'none';
-    }
-
+    toggleModal(modalId, show) {
+        const modal = document.getElementById(modalId);
+        console.log(`Toggling modal: ${modalId}, Current display: ${modal.style.display}`);
+        modal.style.display = show? 'block' : 'none';
+        console.log(`New display:${modal.style.display}`);
+    }    
+    
     addProjectToUI() {
         const projectNameInput = document.getElementById('new-project-name');
         const projectName = projectNameInput.value;
         if (projectName) {
             const newProject = new Project(projectName);
             this.projectManager.addProject(newProject);
-            this.toggleModal();
             projectNameInput.value = '';
             this.renderProjects();
         }
@@ -76,15 +86,26 @@ class TodoApp {
 
 
     addTodoToUI() {
-        const title = document.getElementById('todo-title').value;
-        const description = document.getElementById('todo-description').value;
-        const dueDate = document.getElementById('todo-due-date').value;
-        const priority = document.getElementById('todo-priority').value;
+        const titleElement = document.getElementById('todo-title');
+        const descriptionElement= document.getElementById('todo-description');
+        const dueDateElement= document.getElementById('todo-due-date');
+        const priorityElement = document.getElementById('todo-priority');
+        
+        const title = titleElement.value;
+        const description = descriptionElement.value;
+        const dueDate = dueDateElement.value;
+        const priority = priorityElement.value;
         
         if (this.currentProject) {   
             const newTodo = new Todo(title, description, dueDate, priority);
             this.currentProject.addTodo(newTodo);
             this.updateProjectDisplay();
+
+            //Clear the form fields
+            titleElement.value = '';
+            descriptionElement.value = '';
+            dueDateElement.value = '';
+            priorityElement.selectedIndex = 0;
         } else {
             console.error("No current project selected");
         }
@@ -101,5 +122,8 @@ class TodoApp {
     }
 }
 
-new TodoApp();
-
+// Initialize the TodoApp when the DOM is fully loaded
+document.addEventListener('DOMContentLoaded', function() {
+    const app = new TodoApp();
+    app.init();
+});

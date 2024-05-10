@@ -16,9 +16,9 @@
     <!-- Modal for Adding Projects-->
     <div id="project-modal" class="modal">
         <div class="modal-content">
-            <span id="close-button">x</span>
+            <span id="close-project-modal" class="close-button">x</span>
             <h2>Add New Project</h2>
-            <input type="text" id="new-project-name" placeholder="Enter new projct name">
+            <input type="text" id="new-project-name" placeholder="Enter new project name">
             <button id="confirm-add-project">Add</button>
         </div>
     </div>
@@ -39,25 +39,33 @@
             <!--Projects will be dynamicaly added here-->
         </ul>
     </aside>
-
+    <!-- Modal for Adding Todos-->
+    <div id="todo-modal" class="modal">
+        <div class="modal-content">
+            <span id="close-todo-modal" class="close-button">x</span>
+            <form id="todo-form">
+                <input type="text" id="todo-title" placeholder="Todo Title">
+                <textarea id="todo-description" placeholder="Description"></textarea>
+                <input type="date" id="todo-due-date">
+                <select id="todo-priority">
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                </select>
+                <button id="confirm-add-todo">Add</button>
+            </form>
+        </div>
+    </div>
     <!-- Main content area for Todos -->
     <main class="main-content">
         <h2 id="project-title">Selected Project</h2>
+        <div class="todo-header">
+            <h2>Todo's</h2>
+            <button id="add-todo"><i class="fas fa-plus"></i></button>
+        </div>
         <ul id="todo-list">
             <!-- Todo will be dynamically added here-->
         </ul>
-
-        <form id="todo-form">
-            <input type="text" id="todo-title" placeholder="Todo Title" required>
-            <textarea id="todo-description" placeholder="Description"></textarea>
-            <input type="date" id="todo-due-date">
-            <select id="todo-priority">
-                <option value="low">Low</option>
-                <option value="medium">Medium</option>
-                <option value="high">High</option>
-            </select>
-            <button type="submit">Add Todo</button>
-        </form>
     </main>
 
     <!-- Advanced Filters Sections -->
