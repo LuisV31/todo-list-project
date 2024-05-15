@@ -137,6 +137,24 @@ h2 {
     position: relative;
 }
 
+.project-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.project-actions button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-color);
+    font-size: 1.2em;
+}
+
+.project-actions button:hover {
+    color: var(--primary-color);
+}
+
 .title-with-icon {
     border-bottom: 1px solid var(--primary-color);
     padding-bottom: 10px;
@@ -159,6 +177,9 @@ ul {
 }
 
 li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     background-color: var(--light-gray);
     margin-bottom: 8px;
     padding: 10px 15px;

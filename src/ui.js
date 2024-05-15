@@ -12,6 +12,8 @@ class TodoApp {
         this.toggleModal = this.toggleModal.bind(this);
         this.addProjectToUI = this.addProjectToUI.bind(this);
         this.addTodoToUI = this.addTodoToUI.bind(this);
+        this.handleEditProject = this.handleEditProject.bind(this);
+        this.handleDeleteProject = this.handleDeleteProject.bind(this);
     }
 
     init() {
@@ -19,7 +21,7 @@ class TodoApp {
         this.addEventListeners();
     }
 
-    addEventListeners() {
+    addEventListeners() {       
         // Project interactions
         document.getElementById('add-project').addEventListener('click', () => this.toggleModal('project-modal', true));
         document.getElementById('confirm-add-project').addEventListener('click', () => {
@@ -38,6 +40,15 @@ class TodoApp {
             this.addTodoToUI();
             this.toggleModal('todo-modal', false); // Close modal right after adding
         });
+
+        // Delegate project edit and delete button clicks
+        document.getElementById('project-list').addEventListener('click', (event) => {
+            if (event.target.classList.contains('edit-project')) {
+                this.handleEditProject(event);
+            } else if (event.target.classList.contains('delete-project')) {
+                this.handleDeleteProject(event);
+            }
+        });
     }
     
 
@@ -46,12 +57,33 @@ class TodoApp {
         projectContainer.innerHTML = '';
         this.projectManager.getProjects().forEach(project => {
             const projectElement = document.createElement('li');
-            projectElement.textContent = project.name;
             projectElement.className = project === this.currentProject ? 'active' : '';
+            projectElement.innerHTML = `
+                ${project.name}
+                <div class="project-actions">
+                    <button class="edit-project"><i class="fas fa-edit"></i></button>
+                    <button class="delete-project"><i class="fas fa-trash-alt"></i></button>
+                </div>
+            `;
             projectContainer.appendChild(projectElement);
         });
     }
 
+    handleEditProject(event) {
+        const projectElement = event.target.closest('li');
+        const oldName = projectElement.childNodes[0].textContent.trim();
+        
+    }
+
+    handleDeleteProject(event) {
+        if(confirm("Are you sure you want to delete this project?")) {
+            const projectElement = event.target.closest('li');
+            const projectName = projectElement.textContent.trim();
+            this.projectManager.removeProject(projectName);
+            this.renderProjects();
+        }
+    }
+    
     handleProjectClick(event) {
         const clickedElement = event.target;
         const selectedProject = this.projectManager.getProjects().find(project => project.name === clickedElement.textContent);
