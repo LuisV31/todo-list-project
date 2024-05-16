@@ -19,6 +19,7 @@ class TodoApp {
     init() {
         this.renderProjects();
         this.addEventListeners();
+        this.updateProjectDisplay();
     }
 
     addEventListeners() {       
@@ -47,6 +48,8 @@ class TodoApp {
                 this.handleEditProject(event);
             } else if (event.target.classList.contains('delete-project')) {
                 this.handleDeleteProject(event);
+            } else if (event.target.tagName === 'li') {
+                this.handleProjectClick(event);
             }
         });
     }
@@ -59,7 +62,7 @@ class TodoApp {
             const projectElement = document.createElement('li');
             projectElement.className = project === this.currentProject ? 'active' : '';
             projectElement.innerHTML = `
-                ${project.name}
+               <span class="project-name">${project.name}</span>
                 <div class="project-actions">
                     <button class="edit-project"><i class="fas fa-edit"></i></button>
                     <button class="delete-project"><i class="fas fa-trash-alt"></i></button>
@@ -71,22 +74,34 @@ class TodoApp {
 
     handleEditProject(event) {
         const projectElement = event.target.closest('li');
-        const oldName = projectElement.childNodes[0].textContent.trim();
-        
+        const oldName = projectElement.querySelector('.project-name').textContent.trim();
+        const newName = prompt("Enter the new project name:", oldName);
+        if (newName && oldName != newName) {
+            if(this.projectManager.updateProjectName(oldName, newName)) {
+                this.renderProjects();
+                this.updateProjectDisplay();
+            } else {
+                alert("Project name must be unique and valid.")
+            }
+        }
     }
 
     handleDeleteProject(event) {
+        const projectElement = event.target.closest('li');
+        const projectName = projectElement.querySelector('.project-name').textContent.trim();
         if(confirm("Are you sure you want to delete this project?")) {
-            const projectElement = event.target.closest('li');
-            const projectName = projectElement.textContent.trim();
             this.projectManager.removeProject(projectName);
             this.renderProjects();
+            if (this.currentProject.name === projectName) {
+                this.currentProject = this.projectManager.getProjects()[0] || null;
+                this.updateProjectDisplay();
+            }
         }
     }
     
     handleProjectClick(event) {
-        const clickedElement = event.target;
-        const selectedProject = this.projectManager.getProjects().find(project => project.name === clickedElement.textContent);
+        const clickedElement = event.target.closest('li');
+        const selectedProject = this.projectManager.getProjects().find(project => project.name === clickedElement.querySelector('.project-name').textContent.trim());
         if (selectedProject) {
             this.selectProject(selectedProject)
         }
@@ -100,9 +115,7 @@ class TodoApp {
 
     toggleModal(modalId, show) {
         const modal = document.getElementById(modalId);
-        console.log(`Toggling modal: ${modalId}, Current display: ${modal.style.display}`);
         modal.style.display = show? 'block' : 'none';
-        console.log(`New display:${modal.style.display}`);
     }    
     
     addProjectToUI() {
@@ -113,6 +126,7 @@ class TodoApp {
             this.projectManager.addProject(newProject);
             projectNameInput.value = '';
             this.renderProjects();
+            this.selectProject(newProject);
         }
     }
 
@@ -146,11 +160,13 @@ class TodoApp {
     updateProjectDisplay() {
         const todoContainer = document.getElementById('todo-list');
         todoContainer.innerHTML = '';
-        this.currentProject.getTodos().forEach(todo => {
-            const todoElement = document.createElement('li');
-            todoElement.textContent = `${todo.title} - Due: ${todo.dueDate}`;
-            todoContainer.appendChild(todoElement);
-        });
+        if(this.currentProject) {
+            this.currentProject.getTodos().forEach(todo => {
+                const todoElement = document.createElement('li');
+                todoElement.textContent = `${todo.title} - Due: ${todo.dueDate}`;
+                todoContainer.appendChild(todoElement);
+            });
+        }
     }
 }
 

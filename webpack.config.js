@@ -1,13 +1,15 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin'); // Importing CleanWebpackPlugin
 
 module.exports = {
-    entry: './src/index.js', // Entry point of your app
+    entry: './src/index.js', 
     output: {
-        filename: 'bundle.js', // Name of the output bundle
-        path: path.resolve(__dirname, 'dist') // Directory where the bundle should be saved
+        filename: 'bundle.js',
+        path: path.resolve(__dirname, 'dist')
     },
     plugins: [
+        new CleanWebpackPlugin(), // Using CleanWebpackPlugin
         new HtmlWebpackPlugin({
             title: 'My Todo App',
             template: './src/index.html'
@@ -16,13 +18,13 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.(png|jpg|gif|svg|webp)$/, // Add a rule for image files
+                test: /\.(png|jpg|gif|svg|webp)$/,
                 use: [
                     {
                         loader: 'file-loader',
                         options: {
-                            name: '[name].[ext]', // Keep the original file name and extension
-                            outputPath: 'images/', // Output images to an 'images' folder in the dist directory
+                            name: '[name].[ext]',
+                            outputPath: 'images/',
                         },
                     },
                 ],
@@ -33,5 +35,6 @@ module.exports = {
             },
         ],
     },
-    mode: 'development'
+    mode: 'development',
+    devtool: 'source-map'
 };

@@ -27,7 +27,7 @@ export default class Todo {
         }
     }
 
-    removeTodoFromChecklist(task) {
+    removeTaskFromChecklist(task) {
         this.checklist = this.checklist.filter(item => item.task !== task);
     }
 

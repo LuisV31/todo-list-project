@@ -3,14 +3,13 @@ import Project from "./Project";
 class ProjectManager {
     constructor() {
         this.projects = [];
-        this.currentProject = null;
-        this.createDefaultProject();
+        this.currentProject = this.projects[0] || this.createDefaultProject();
     }
 
     createDefaultProject() {
         const defaultProject = new Project("default");
         this.addProject(defaultProject);
-        this.currentProject = defaultProject;
+        return defaultProject;
     }
 
     addProject(project) {
@@ -20,6 +19,8 @@ class ProjectManager {
     }
     this.projects.push(project);
     this.currentProject = project;
+    // Uncommenting this when save is added
+    // this.saveProjects();
     }
     
     findProjectByName(name) {
@@ -39,6 +40,8 @@ class ProjectManager {
             if (this.currentProject && this.currentProject.name === name) {
                 this.currentProject = this.projects[0] || null;
             }
+            // Uncomment this line when save is added
+            // this.saveProjects();
             return true;
         }
         return false;
@@ -48,6 +51,8 @@ class ProjectManager {
         const project = this.findProjectByName(oldName);
         if (project && !this.findProjectByName(newName)) {
             project.name = newName;
+            // Uncomment this when save is added
+            // this.saveProjects();
             return true;
         }
         return false;
@@ -63,6 +68,17 @@ class ProjectManager {
     getCurrentProject() {
         return this.currentProject;
     }
+
+
+    // Placeholder for future localStorage methods
+    // saveProjects() {
+    //     localStorage.setItem('projects', JSON.stringify(this.projects));
+    // }
+
+    // loadProjects() {
+    //     const projects = localStorage.getItem('projects');
+    //     return projects ? JSON.parse(projects).map(projData => new Project(projData.name)) : null;
+    // }
 
 }
 

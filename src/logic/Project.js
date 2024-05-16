@@ -5,7 +5,11 @@ export default class Project {
     }
 
     addTodo(todo) {
-        this.todos.push(todo);
+        if (todo.title) {
+            this.todos.push(todo);
+        } else {
+            console.error("Todo must have a title");
+        }
     }
     
     removeTodo(todo) {
