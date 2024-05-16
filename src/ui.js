@@ -48,7 +48,7 @@ class TodoApp {
                 this.handleEditProject(event);
             } else if (event.target.classList.contains('delete-project')) {
                 this.handleDeleteProject(event);
-            } else if (event.target.tagName === 'li') {
+            } else if (event.target.tagName === 'LI') {
                 this.handleProjectClick(event);
             }
         });
