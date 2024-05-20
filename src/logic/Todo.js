@@ -6,6 +6,7 @@ export default class Todo {
         this.priority = priority;
         this.notes = [];
         this.checklist = [];
+        this.completed = false;
     }
 
     addNote(note) {

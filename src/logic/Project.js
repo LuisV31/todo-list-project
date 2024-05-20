@@ -13,18 +13,10 @@ export default class Project {
     }
     
     removeTodo(todo) {
-       this.todos = this.todos.filter(t => t !== todo);
+        this.todos = this.todos.filter(t => t.title !== todo.title);
     }
 
-    // View all todos in each project
     getTodos() {
         return this.todos;
     }
-
-    // updateTodo(todoTitle, updateProperties) {
-    //     const todo = this.getTodo(todoTitle);
-    //     if (todo) {
-    //         todo.editTodoDetails(updateProperties);
-    //     }
-    // }
 }

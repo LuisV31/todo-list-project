@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Todo list</title>
     <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-    <script defer src="bundle.js"></script></head>
+<script defer src="bundle.js"></script></head>
 <body>
 
 <div class="app-container">
@@ -36,10 +36,10 @@
             <button id="add-project"><i class="fas fa-plus"></i></button>
         </div>
         <ul id="project-list">
-            <!--Projects will be dynamicaly added here-->
+            <!--Projects will be dynamically added here-->
         </ul>
     </aside>
-    <!-- Modal for Adding Todos-->
+    <!-- Modal for Adding/Editing Todos-->
     <div id="todo-modal" class="modal">
         <div class="modal-content">
             <span id="close-todo-modal" class="close-button">x</span>
@@ -52,7 +52,7 @@
                     <option value="medium">Medium</option>
                     <option value="high">High</option>
                 </select>
-                <button id="confirm-add-todo">Add</button>
+                <button type="submit">Add</button>
             </form>
         </div>
     </div>
@@ -96,6 +96,6 @@
     <!-- </section> --> 
     
 </div>
- 
+
 </body>
 </html>

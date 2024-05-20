@@ -104,6 +104,10 @@ h2 {
     background-color: rgba(0, 0, 0, 0.4);
 }
 
+.modal.show {
+    display: block;
+}
+
 .modal-content {
     background-color: var(--white);
     margin: 15% auto;
@@ -260,13 +264,85 @@ button:hover {
     background-color: var(--hover-blue);
 }
 
+/* Todo ITem Styles */
+.todo-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--light-gray);
+    margin-bottom: 8px;
+    padding: 10px 15px;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: background-color 0.3s;
+    color: var(--primary-color);
+}
+
+.todo-item.completed {
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+.todo-item:hover {
+    background-color: var(--dark-gray);
+}
+
+.todo-details {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    margin-left: 10px;
+}
+
+.todo-title {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.todo-due-date {
+    font-size: 14px;
+    color: var(--secondary-color);
+}
+
+/* Checkbox styles */
+.mark-complete {
+    cursor: pointer;
+}
+
+/* Button Styles */
+.todo-item button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-color);
+    font-size: 1em;
+    margin-left: 5px;
+    padding: 3px 5px;
+    transition: color 0.3s;
+    width: auto;
+}
+
+.todo-item button:hover {
+    color: var(--primary-color);
+}
+
+.todo-item .edit-todo i, .todo-item .delete-todo i {
+    font-size: 0.8em;
+    padding: 5px;
+}
+
+.completed .todo-title, .completed .todo-due-date {
+    text-decoration: line-through;
+}
+
 @media (max-width: 768px) {
     .app-container {
         grid-template-columns: 1fr;
         grid-template-areas: "header" "sidebar" "main";
     }
 }
-`, "",{"version":3,"sources":["webpack://./src/styles.css"],"names":[],"mappings":"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","sourcesContent":[":root {\n    --primary-color: #007bff;\n    --secondary-color: #6c757d;\n    --background-color: #f8f9fa;\n    --text-color: #212529;\n    --white: #fff;\n    --light-gray: #f9f9f9;\n    --dark-gray: #e9e9e9;\n    --dark-blue: #1f4068;\n    --hover-blue: #0056b3;\n}\n\n/* Base Styles */\nbody, html {\n    margin: 0;\n    padding: 0;\n    height: 100%;\n    font-family: Arial, sans-serif;\n    background-color: var(--background-color);\n    color: var(--text-color);\n}\n\n.app-container {\n    display: grid;\n    grid-template-columns: 1fr 4fr;\n    grid-template-rows: min-content auto;\n    grid-template-areas: \n        \"header header\"\n        \"sidebar main\";\n    height: 100vh;\n}\n\n.header {\n    grid-area: header;\n    background-color: var(--primary-color);\n    display: flex;\n    align-items: center;\n    justify-content: space-between;\n    font-size: 24px;\n    box-shadow: 0 2px 5px rgba(0,0,0,0.2);\n    padding: 20px;\n    color: var(--white);\n}\n\n.sidebar {\n    grid-area: sidebar;\n    background-color: var(--secondary-color);\n    overflow-y: auto;\n    padding: 20px;\n}\n\nh2 {\n    margin: 0;\n    font-size: 2.5em;\n}\n\n.sidebar button#add-project,\n.main-content button#add-todo {\n  border-radius: 50%;\n  width: 30px;\n  height: 30px;\n  padding: 0;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  overflow: hidden;\n  background-color: var(--primary-color);\n  border: none;\n  cursor: pointer;\n}\n\n.modal {\n    display: none;\n    position: fixed;\n    z-index: 1;\n    left: 0;\n    top: 0;\n    width: 100%;\n    height: 100%;\n    overflow: auto;\n    background-color: rgba(0, 0, 0, 0.4);\n}\n\n.modal-content {\n    background-color: var(--white);\n    margin: 15% auto;\n    padding: 20px;\n    border: 1px solid #888;\n    width: 50%;\n    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);\n    color: var(--text-color);\n}\n\n.close-button {\n    color: #aaa;\n    float: right;\n    font-size: 28px;\n    font-weight: bold;\n    cursor: pointer;\n}\n\n.close-button:hover,\n.close-button:focus {\n    color: black;\n}\n\n.main-content {\n    grid-area: main;\n    overflow-y: auto;\n    display: flex;\n    flex-direction: column;\n    padding: 40px 40px;\n}\n\n.project-header {\n    justify-content: space-between;\n}\n\n.todo-header {\n    justify-content: space-around;\n}\n.project-header, .todo-header {\n    display: flex;\n    align-items: center;\n    margin-bottom: 10px;\n    padding-bottom: 10px;\n    border-bottom: 1px solid var(--primary-color);\n}\n\n#project-title {\n    margin-bottom: 20px;\n    text-align: center;\n    padding-bottom: 10px;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    position: relative;\n}\n\n.project-actions {\n    display: flex;\n    gap: 10px;\n    justify-content: flex-end;\n}\n\n.project-actions button {\n    background: none;\n    border: none;\n    cursor: pointer;\n    color: var(--text-color);\n    font-size: 1.2em;\n}\n\n.project-actions button:hover {\n    color: var(--primary-color);\n}\n\n.title-with-icon {\n    border-bottom: 1px solid var(--primary-color);\n    padding-bottom: 10px;\n    display: inline-flex;\n    align-items: center;\n    gap: 10px;\n    justify-content: center;\n}\n\n.calendar-icon {\n  margin-right: 10px;\n  font-size: 48px;\n  vertical-align: middle;\n}\n\nul {\n    list-style: none;\n    margin-top: 0;\n    padding: 0;\n}\n\nli {\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    background-color: var(--light-gray);\n    margin-bottom: 8px;\n    padding: 10px 15px;\n    border-radius: 4px;\n    box-shadow: 0 2px 5px rgba(0,0,0,0.1);\n    cursor: pointer;\n    transition: background-color 0.3s;\n    font-size: 16px;\n    color: var(--white);\n}\n\nli:hover, .task-filters li:hover, .task-filters li.active {\n    background-color: var(--dark-gray);\n}\n\n.task-filters li {\n    display: flex;\n    align-items: center;\n    gap: 8px;\n    background-color: var(--dark-blue);\n}\n\nli.active {\n    background-color: var(--primary-color);\n}\n\n#todo-list li {\n    color: var(--primary-color);\n}\n\n#todo-list li.active {\n    background-color: var(--primary-color);\n    color: var(--white);\n}\n#project-list li{\n    color: var(--primary-color);\n}\n\n#project-list li.active {\n    background-color: var(--primary-color);\n    color: var(--white);\n}\n\nbutton, input[type=\"text\"], input[type=\"date\"], select, textarea {\n    width: 100%;\n    padding: 8px;\n    margin-top: 5px;\n    border: none;\n    background-color: var(--primary-color);\n    color: var(--white);\n    cursor: pointer;\n}\n\nbutton:hover {\n    background-color: var(--hover-blue);\n}\n\n@media (max-width: 768px) {\n    .app-container {\n        grid-template-columns: 1fr;\n        grid-template-areas: \"header\" \"sidebar\" \"main\";\n    }\n}\n"],"sourceRoot":""}]);
+`, "",{"version":3,"sources":["webpack://./src/styles.css"],"names":[],"mappings":"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","sourcesContent":[":root {\n    --primary-color: #007bff;\n    --secondary-color: #6c757d;\n    --background-color: #f8f9fa;\n    --text-color: #212529;\n    --white: #fff;\n    --light-gray: #f9f9f9;\n    --dark-gray: #e9e9e9;\n    --dark-blue: #1f4068;\n    --hover-blue: #0056b3;\n}\n\n/* Base Styles */\nbody, html {\n    margin: 0;\n    padding: 0;\n    height: 100%;\n    font-family: Arial, sans-serif;\n    background-color: var(--background-color);\n    color: var(--text-color);\n}\n\n.app-container {\n    display: grid;\n    grid-template-columns: 1fr 4fr;\n    grid-template-rows: min-content auto;\n    grid-template-areas: \n        \"header header\"\n        \"sidebar main\";\n    height: 100vh;\n}\n\n.header {\n    grid-area: header;\n    background-color: var(--primary-color);\n    display: flex;\n    align-items: center;\n    justify-content: space-between;\n    font-size: 24px;\n    box-shadow: 0 2px 5px rgba(0,0,0,0.2);\n    padding: 20px;\n    color: var(--white);\n}\n\n.sidebar {\n    grid-area: sidebar;\n    background-color: var(--secondary-color);\n    overflow-y: auto;\n    padding: 20px;\n}\n\nh2 {\n    margin: 0;\n    font-size: 2.5em;\n}\n\n.sidebar button#add-project,\n.main-content button#add-todo {\n  border-radius: 50%;\n  width: 30px;\n  height: 30px;\n  padding: 0;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  overflow: hidden;\n  background-color: var(--primary-color);\n  border: none;\n  cursor: pointer;\n}\n\n.modal {\n    display: none;\n    position: fixed;\n    z-index: 1;\n    left: 0;\n    top: 0;\n    width: 100%;\n    height: 100%;\n    overflow: auto;\n    background-color: rgba(0, 0, 0, 0.4);\n}\n\n.modal.show {\n    display: block;\n}\n\n.modal-content {\n    background-color: var(--white);\n    margin: 15% auto;\n    padding: 20px;\n    border: 1px solid #888;\n    width: 50%;\n    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);\n    color: var(--text-color);\n}\n\n.close-button {\n    color: #aaa;\n    float: right;\n    font-size: 28px;\n    font-weight: bold;\n    cursor: pointer;\n}\n\n.close-button:hover,\n.close-button:focus {\n    color: black;\n}\n\n.main-content {\n    grid-area: main;\n    overflow-y: auto;\n    display: flex;\n    flex-direction: column;\n    padding: 40px 40px;\n}\n\n.project-header {\n    justify-content: space-between;\n}\n\n.todo-header {\n    justify-content: space-around;\n}\n.project-header, .todo-header {\n    display: flex;\n    align-items: center;\n    margin-bottom: 10px;\n    padding-bottom: 10px;\n    border-bottom: 1px solid var(--primary-color);\n}\n\n#project-title {\n    margin-bottom: 20px;\n    text-align: center;\n    padding-bottom: 10px;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    position: relative;\n}\n\n.project-actions {\n    display: flex;\n    gap: 10px;\n    justify-content: flex-end;\n}\n\n.project-actions button {\n    background: none;\n    border: none;\n    cursor: pointer;\n    color: var(--text-color);\n    font-size: 1.2em;\n}\n\n.project-actions button:hover {\n    color: var(--primary-color);\n}\n\n.title-with-icon {\n    border-bottom: 1px solid var(--primary-color);\n    padding-bottom: 10px;\n    display: inline-flex;\n    align-items: center;\n    gap: 10px;\n    justify-content: center;\n}\n\n.calendar-icon {\n  margin-right: 10px;\n  font-size: 48px;\n  vertical-align: middle;\n}\n\nul {\n    list-style: none;\n    margin-top: 0;\n    padding: 0;\n}\n\nli {\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    background-color: var(--light-gray);\n    margin-bottom: 8px;\n    padding: 10px 15px;\n    border-radius: 4px;\n    box-shadow: 0 2px 5px rgba(0,0,0,0.1);\n    cursor: pointer;\n    transition: background-color 0.3s;\n    font-size: 16px;\n    color: var(--white);\n}\n\nli:hover, .task-filters li:hover, .task-filters li.active {\n    background-color: var(--dark-gray);\n}\n\n.task-filters li {\n    display: flex;\n    align-items: center;\n    gap: 8px;\n    background-color: var(--dark-blue);\n}\n\nli.active {\n    background-color: var(--primary-color);\n}\n\n#todo-list li {\n    color: var(--primary-color);\n}\n\n#todo-list li.active {\n    background-color: var(--primary-color);\n    color: var(--white);\n}\n#project-list li{\n    color: var(--primary-color);\n}\n\n#project-list li.active {\n    background-color: var(--primary-color);\n    color: var(--white);\n}\n\nbutton, input[type=\"text\"], input[type=\"date\"], select, textarea {\n    width: 100%;\n    padding: 8px;\n    margin-top: 5px;\n    border: none;\n    background-color: var(--primary-color);\n    color: var(--white);\n    cursor: pointer;\n}\n\nbutton:hover {\n    background-color: var(--hover-blue);\n}\n\n/* Todo ITem Styles */\n.todo-item {\n    display: flex;\n    align-items: center;\n    justify-content: space-between;\n    background-color: var(--light-gray);\n    margin-bottom: 8px;\n    padding: 10px 15px;\n    border-radius: 4px;\n    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);\n    cursor: pointer;\n    transition: background-color 0.3s;\n    color: var(--primary-color);\n}\n\n.todo-item.completed {\n    text-decoration: line-through;\n    opacity: 0.6;\n}\n\n.todo-item:hover {\n    background-color: var(--dark-gray);\n}\n\n.todo-details {\n    display: flex;\n    flex-direction: column;\n    flex-grow: 1;\n    margin-left: 10px;\n}\n\n.todo-title {\n    font-size: 16px;\n    font-weight: bold;\n}\n\n.todo-due-date {\n    font-size: 14px;\n    color: var(--secondary-color);\n}\n\n/* Checkbox styles */\n.mark-complete {\n    cursor: pointer;\n}\n\n/* Button Styles */\n.todo-item button {\n    background: none;\n    border: none;\n    cursor: pointer;\n    color: var(--text-color);\n    font-size: 1em;\n    margin-left: 5px;\n    padding: 3px 5px;\n    transition: color 0.3s;\n    width: auto;\n}\n\n.todo-item button:hover {\n    color: var(--primary-color);\n}\n\n.todo-item .edit-todo i, .todo-item .delete-todo i {\n    font-size: 0.8em;\n    padding: 5px;\n}\n\n.completed .todo-title, .completed .todo-due-date {\n    text-decoration: line-through;\n}\n\n@media (max-width: 768px) {\n    .app-container {\n        grid-template-columns: 1fr;\n        grid-template-areas: \"header\" \"sidebar\" \"main\";\n    }\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -736,20 +812,12 @@ class Project {
     }
     
     removeTodo(todo) {
-       this.todos = this.todos.filter(t => t !== todo);
+        this.todos = this.todos.filter(t => t.title !== todo.title);
     }
 
-    // View all todos in each project
     getTodos() {
         return this.todos;
     }
-
-    // updateTodo(todoTitle, updateProperties) {
-    //     const todo = this.getTodo(todoTitle);
-    //     if (todo) {
-    //         todo.editTodoDetails(updateProperties);
-    //     }
-    // }
 }
 
 
@@ -773,6 +841,7 @@ class Todo {
         this.priority = priority;
         this.notes = [];
         this.checklist = [];
+        this.completed = false;
     }
 
     addNote(note) {
@@ -932,35 +1001,34 @@ class TodoApp {
         // Bind methods
         this.handleProjectClick = this.handleProjectClick.bind(this);
         this.toggleModal = this.toggleModal.bind(this);
-        this.addProjectToUI = this.addProjectToUI.bind(this);
-        this.addTodoToUI = this.addTodoToUI.bind(this);
+        this.saveTodo = this.saveTodo.bind(this);
         this.handleEditProject = this.handleEditProject.bind(this);
         this.handleDeleteProject = this.handleDeleteProject.bind(this);
+        this.handleTodoAction = this.handleTodoAction.bind(this);
+        this.addProject = this.addProject.bind(this);
     }
 
     init() {
         this.renderProjects();
         this.addEventListeners();
-        this.updateProjectDisplay();
+        this.renderTodos();
     }
 
     addEventListeners() {       
         // Project interactions
         document.getElementById('add-project').addEventListener('click', () => this.toggleModal('project-modal', true));
         document.getElementById('confirm-add-project').addEventListener('click', () => {
-            this.addProjectToUI();
+            this.addProject();
             this.toggleModal('project-modal', false); // Close modal explicitly here
         });
         document.getElementById('close-project-modal').addEventListener('click', () => this.toggleModal('project-modal', false));
     
         // Todo interactions
-        document.getElementById('add-todo').addEventListener('click', () => this.toggleModal('todo-modal', true));
+        document.getElementById('add-todo').addEventListener('click', () => this.showTodoModal());
         document.getElementById('close-todo-modal').addEventListener('click', () => this.toggleModal('todo-modal', false));
-    
-        // Only handle adding a todo through form submission to prevent duplication
         document.getElementById('todo-form').addEventListener('submit', (event) => {
             event.preventDefault();
-            this.addTodoToUI();
+            this.saveTodo();
             this.toggleModal('todo-modal', false); // Close modal right after adding
         });
 
@@ -974,9 +1042,11 @@ class TodoApp {
                 this.handleProjectClick(event);
             }
         });
+        
+        // Delegate todo actions (edit, delete, mark complete)
+        document.getElementById('todo-list').addEventListener('click', this.handleTodoAction);
     }
     
-
     renderProjects() {
         const projectContainer = document.getElementById('project-list');
         projectContainer.innerHTML = '';
@@ -994,16 +1064,28 @@ class TodoApp {
         });
     }
 
+    addProject() {
+        const projectNameInput = document.getElementById('new-project-name');
+        const projectName = projectNameInput.value;
+        if (projectName) {
+            const newProject = new _logic_Project_js__WEBPACK_IMPORTED_MODULE_1__["default"](projectName);
+            this.projectManager.addProject(newProject);
+            projectNameInput.value = '';
+            this.renderProjects();
+            this.selectCurrentProject(newProject);
+        }
+    }
+
     handleEditProject(event) {
         const projectElement = event.target.closest('li');
         const oldName = projectElement.querySelector('.project-name').textContent.trim();
         const newName = prompt("Enter the new project name:", oldName);
-        if (newName && oldName != newName) {
-            if(this.projectManager.updateProjectName(oldName, newName)) {
+        if (newName && oldName !== newName) {
+            if (this.projectManager.updateProjectName(oldName, newName)) {
                 this.renderProjects();
-                this.updateProjectDisplay();
+                this.renderTodos();
             } else {
-                alert("Project name must be unique and valid.")
+                alert("Project name must be unique and valid.");
             }
         }
     }
@@ -1011,12 +1093,12 @@ class TodoApp {
     handleDeleteProject(event) {
         const projectElement = event.target.closest('li');
         const projectName = projectElement.querySelector('.project-name').textContent.trim();
-        if(confirm("Are you sure you want to delete this project?")) {
+        if (confirm("Are you sure you want to delete this project?")) {
             this.projectManager.removeProject(projectName);
             this.renderProjects();
-            if (this.currentProject.name === projectName) {
+            if (this.currentProject && this.currentProject.name === projectName) {
                 this.currentProject = this.projectManager.getProjects()[0] || null;
-                this.updateProjectDisplay();
+                this.renderTodos();
             }
         }
     }
@@ -1025,38 +1107,39 @@ class TodoApp {
         const clickedElement = event.target.closest('li');
         const selectedProject = this.projectManager.getProjects().find(project => project.name === clickedElement.querySelector('.project-name').textContent.trim());
         if (selectedProject) {
-            this.selectProject(selectedProject)
+            this.selectCurrentProject(selectedProject);
         }
     }
 
-    selectProject(project) {
+    selectCurrentProject(project) {
         this.currentProject = project; 
         this.renderProjects();
-        this.updateProjectDisplay();
+        this.renderTodos();
     }
 
     toggleModal(modalId, show) {
         const modal = document.getElementById(modalId);
-        modal.style.display = show? 'block' : 'none';
+        modal.classList.toggle('show', show);
     }    
     
-    addProjectToUI() {
-        const projectNameInput = document.getElementById('new-project-name');
-        const projectName = projectNameInput.value;
-        if (projectName) {
-            const newProject = new _logic_Project_js__WEBPACK_IMPORTED_MODULE_1__["default"](projectName);
-            this.projectManager.addProject(newProject);
-            projectNameInput.value = '';
-            this.renderProjects();
-            this.selectProject(newProject);
-        }
+    showTodoModal(todo = null) {
+        // Fill the form with the todo details if editing, otherwise clear the form
+        document.getElementById('todo-title').value = todo ? todo.title : '';
+        document.getElementById('todo-description').value = todo ? todo.description : '';
+        document.getElementById('todo-due-date').value = todo ? todo.dueDate : '';
+        document.getElementById('todo-priority').value = todo ? todo.priority : '';
+
+        // Save the todo being edited or indicate a new todo
+        this.todoBeingEdited = todo;
+
+        // Show the modal
+        this.toggleModal('todo-modal', true);
     }
-
-
-    addTodoToUI() {
+    
+    saveTodo() {
         const titleElement = document.getElementById('todo-title');
-        const descriptionElement= document.getElementById('todo-description');
-        const dueDateElement= document.getElementById('todo-due-date');
+        const descriptionElement = document.getElementById('todo-description');
+        const dueDateElement = document.getElementById('todo-due-date');
         const priorityElement = document.getElementById('todo-priority');
         
         const title = titleElement.value;
@@ -1064,12 +1147,23 @@ class TodoApp {
         const dueDate = dueDateElement.value;
         const priority = priorityElement.value;
         
-        if (this.currentProject) {   
-            const newTodo = new _logic_Todo_js__WEBPACK_IMPORTED_MODULE_2__["default"](title, description, dueDate, priority);
-            this.currentProject.addTodo(newTodo);
-            this.updateProjectDisplay();
+        if (this.currentProject) {
+            if(this.todoBeingEdited) {
+                // Edit the existing todo
+                this.todoBeingEdited.editTodoDetails({
+                    title: title,
+                    description: description,
+                    dueDate: dueDate,
+                    priority: priority
+                });
+            } else {
+                // Add a new todo
+                const newTodo = new _logic_Todo_js__WEBPACK_IMPORTED_MODULE_2__["default"](title, description, dueDate, priority);
+                this.currentProject.addTodo(newTodo);
+            }
+            this.renderTodos();
 
-            //Clear the form fields
+            // Clear the form fields
             titleElement.value = '';
             descriptionElement.value = '';
             dueDateElement.value = '';
@@ -1079,17 +1173,55 @@ class TodoApp {
         }
     }
 
-    updateProjectDisplay() {
+    handleTodoAction(event) {
+        const todoElement = event.target.closest('li');
+        if (!todoElement) {
+            console.error("No todo element found.");
+            return;
+        }
+
+        const todoTitle = todoElement.querySelector('.todo-title').textContent.split(' - Due: ')[0];
+        const todo = this.currentProject.getTodos().find(t => t.title === todoTitle);
+
+        if (todo) {
+            if (event.target.classList.contains('edit-todo') || event.target.closest('.edit-todo')) {
+                this.showTodoModal(todo);
+            } else if (event.target.classList.contains('delete-todo') || event.target.closest('.delete-todo')) {
+                if (confirm("Are you sure you want to delete this todo?")) {
+                    this.currentProject.removeTodo(todo);
+                    this.renderTodos();
+                }
+            } else if (event.target.classList.contains('mark-complete')) {
+                todo.completed = !todo.completed;
+                this.renderTodos();
+            }
+        } else {
+            console.error("Todo not found for action.");
+        }
+    }
+
+
+    renderTodos() {
         const todoContainer = document.getElementById('todo-list');
         todoContainer.innerHTML = '';
-        if(this.currentProject) {
+        if (this.currentProject) {
             this.currentProject.getTodos().forEach(todo => {
                 const todoElement = document.createElement('li');
-                todoElement.textContent = `${todo.title} - Due: ${todo.dueDate}`;
+                todoElement.className = `todo-item ${todo.completed ? 'completed' : ''}`;
+                todoElement.innerHTML = `
+                    <input type="checkbox" class="mark-complete" ${todo.completed ? 'checked' : ''}>
+                    <span class="todo-details">
+                        <span class="todo-title">${todo.title}</span>
+                        <span class="todo-due-date">Due: ${todo.dueDate}</span>
+                    </span>
+                    <button class="edit-todo"><i class="fas fa-edit"></i></button>
+                    <button class="delete-todo"><i class="fas fa-trash-alt"></i></button>
+                `;
                 todoContainer.appendChild(todoElement);
             });
         }
     }
+    
 }
 
 // Initialize the TodoApp when the DOM is fully loaded
@@ -1097,6 +1229,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const app = new TodoApp();
     app.init();
 });
+
 
 /***/ })
 

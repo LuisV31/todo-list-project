@@ -81,6 +81,10 @@ h2 {
     background-color: rgba(0, 0, 0, 0.4);
 }
 
+.modal.show {
+    display: block;
+}
+
 .modal-content {
     background-color: var(--white);
     margin: 15% auto;
@@ -235,6 +239,78 @@ button, input[type="text"], input[type="date"], select, textarea {
 
 button:hover {
     background-color: var(--hover-blue);
+}
+
+/* Todo ITem Styles */
+.todo-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--light-gray);
+    margin-bottom: 8px;
+    padding: 10px 15px;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: background-color 0.3s;
+    color: var(--primary-color);
+}
+
+.todo-item.completed {
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+.todo-item:hover {
+    background-color: var(--dark-gray);
+}
+
+.todo-details {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    margin-left: 10px;
+}
+
+.todo-title {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.todo-due-date {
+    font-size: 14px;
+    color: var(--secondary-color);
+}
+
+/* Checkbox styles */
+.mark-complete {
+    cursor: pointer;
+}
+
+/* Button Styles */
+.todo-item button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-color);
+    font-size: 1em;
+    margin-left: 5px;
+    padding: 3px 5px;
+    transition: color 0.3s;
+    width: auto;
+}
+
+.todo-item button:hover {
+    color: var(--primary-color);
+}
+
+.todo-item .edit-todo i, .todo-item .delete-todo i {
+    font-size: 0.8em;
+    padding: 5px;
+}
+
+.completed .todo-title, .completed .todo-due-date {
+    text-decoration: line-through;
 }
 
 @media (max-width: 768px) {
