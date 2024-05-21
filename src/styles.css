@@ -69,6 +69,14 @@ h2 {
   cursor: pointer;
 }
 
+.hidden {
+    display: none !important;
+}
+
+.visible {
+    display: block !important;
+}
+
 .modal {
     display: none;
     position: fixed;
@@ -81,10 +89,6 @@ h2 {
     background-color: rgba(0, 0, 0, 0.4);
 }
 
-.modal.show {
-    display: block;
-}
-
 .modal-content {
     background-color: var(--white);
     margin: 15% auto;
@@ -93,6 +97,8 @@ h2 {
     width: 50%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     color: var(--text-color);
+    z-index: 1000;
+    position: relative;
 }
 
 .close-button {
@@ -116,19 +122,14 @@ h2 {
     padding: 40px 40px;
 }
 
-.project-header {
-    justify-content: space-between;
-}
-
+.project-header,
 .todo-header {
-    justify-content: space-around;
-}
-.project-header, .todo-header {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
     padding-bottom: 10px;
     border-bottom: 1px solid var(--primary-color);
+    justify-content: space-between;
 }
 
 #project-title {
@@ -195,7 +196,9 @@ li {
     color: var(--white);
 }
 
-li:hover, .task-filters li:hover, .task-filters li.active {
+li:hover, 
+.task-filters li:hover,
+.task-filters li.active {
     background-color: var(--dark-gray);
 }
 
@@ -227,7 +230,11 @@ li.active {
     color: var(--white);
 }
 
-button, input[type="text"], input[type="date"], select, textarea {
+button, 
+input[type="text"],
+input[type="date"], 
+select, 
+textarea {
     width: 100%;
     padding: 8px;
     margin-top: 5px;
@@ -304,12 +311,14 @@ button:hover {
     color: var(--primary-color);
 }
 
-.todo-item .edit-todo i, .todo-item .delete-todo i {
+.todo-item .edit-todo i,
+.todo-item .delete-todo i {
     font-size: 0.8em;
     padding: 5px;
 }
 
-.completed .todo-title, .completed .todo-due-date {
+.completed .todo-title, 
+.completed .todo-due-date {
     text-decoration: line-through;
 }
 

@@ -43,15 +43,15 @@ class TodoApp {
 
         // Delegate project edit and delete button clicks
         document.getElementById('project-list').addEventListener('click', (event) => {
-            if (event.target.classList.contains('edit-project')) {
+            if (event.target.matches('.edit-project')) {
                 this.handleEditProject(event);
-            } else if (event.target.classList.contains('delete-project')) {
+            } else if (event.target.matches('.delete-project')) {
                 this.handleDeleteProject(event);
-            } else if (event.target.tagName === 'LI') {
+            } else if (event.target.matches('li')) {
                 this.handleProjectClick(event);
             }
         });
-        
+                
         // Delegate todo actions (edit, delete, mark complete)
         document.getElementById('todo-list').addEventListener('click', this.handleTodoAction);
     }
@@ -128,8 +128,16 @@ class TodoApp {
 
     toggleModal(modalId, show) {
         const modal = document.getElementById(modalId);
-        modal.classList.toggle('show', show);
-    }    
+        if (show) {
+            modal.classList.add('visible');
+            modal.classList.remove('hidden');
+        } else {
+            modal.classList.add('hidden');
+            modal.classList.remove('visible');
+        }
+    }
+    
+    
     
     showTodoModal(todo = null) {
         // Fill the form with the todo details if editing, otherwise clear the form
