@@ -10,16 +10,20 @@
 
 <div class="app-container">
     <header class="header">
-        <h1>Todo-List Planner</h1>
+        <h1>Project Planner<i class="fas fa-folder-open"></i></h1>
     </header>
 
     <!-- Modal for Adding Projects-->
-    <div id="project-modal" class="modal">
+    <div id="project-modal" class="modal hidden">
         <div class="modal-content">
-            <span id="close-project-modal" class="close-button">x</span>
-            <h2>Add New Project</h2>
-            <input type="text" id="new-project-name" placeholder="Enter new project name">
-            <button id="confirm-add-project">Add</button>
+            <div class="modal-header">
+                <h2>Add New Project</h2>
+                <span id="close-project-modal" class="close-button">×</span>
+            </div>
+            <div class="modal-body">
+                <input type="text" id="new-project-name" placeholder="Enter new project name">
+                <button id="confirm-add-project">Add</button>
+            </div>
         </div>
     </div>
     <!-- Sidebar for Projects -->
@@ -42,18 +46,23 @@
     <!-- Modal for Adding/Editing Todos-->
     <div id="todo-modal" class="modal hidden">
         <div class="modal-content">
-            <span id="close-todo-modal" class="close-button">x</span>
-            <form id="todo-form">
-                <input type="text" id="todo-title" placeholder="Todo Title">
-                <textarea id="todo-description" placeholder="Description"></textarea>
-                <input type="date" id="todo-due-date">
-                <select id="todo-priority">
-                    <option value="low">Low</option>
-                    <option value="medium">Medium</option>
-                    <option value="high">High</option>
-                </select>
-                <button type="submit">Add</button>
-            </form>
+            <div class="modal-header">
+                <h2>Add New Todo</h2>
+                <span id="close-todo-modal" class="close-button">×</span>
+            </div>
+            <div class="modal-body">
+                <form id="todo-form">
+                    <input type="text" id="todo-title" placeholder="Todo Title">
+                    <textarea id="todo-description" placeholder="Description"></textarea>
+                    <input type="date" id="todo-due-date">
+                    <select id="todo-priority">
+                        <option value="low">Low</option>
+                        <option value="medium">Medium</option>
+                        <option value="high">High</option>
+                    </select>
+                    <button type="submit">Add</button>
+                </form>
+            </div>
         </div>
     </div>
     <!-- Main content area for Todos -->
@@ -61,7 +70,7 @@
         <h2 id="project-title">
             <span class="title-with-icon">
                 <i class="fas fa-calendar-alt calendar-icon"></i>
-                Selected Project
+                <span class="project-title-text">Selected Project</span>
             </span>
         </h2>
         <div class="todo-header">
@@ -72,8 +81,7 @@
             <!-- Todo will be dynamically added here-->
         </ul>
     </main>
-
-    <!-- Advanced Filters Sections -->
+        <!-- Advanced Filters Sections -->
     <!-- <section class="filter-section">
         <h2>Advanced Filter</h2>
         <form id="filter-form">
@@ -95,6 +103,7 @@
         </form> -->
     <!-- </section> --> 
     
+
 </div>
 
 </body>

@@ -43,11 +43,12 @@ class TodoApp {
 
         // Delegate project edit and delete button clicks
         document.getElementById('project-list').addEventListener('click', (event) => {
+            const projectItem = event.target.closest('li');
             if (event.target.matches('.edit-project')) {
                 this.handleEditProject(event);
             } else if (event.target.matches('.delete-project')) {
                 this.handleDeleteProject(event);
-            } else if (event.target.matches('li')) {
+            } else if (projectItem) {
                 this.handleProjectClick(event);
             }
         });
@@ -71,6 +72,7 @@ class TodoApp {
             `;
             projectContainer.appendChild(projectElement);
         });
+        this.updateProjectHeader();
     }
 
     addProject() {
@@ -119,25 +121,37 @@ class TodoApp {
             this.selectCurrentProject(selectedProject);
         }
     }
+    
 
     selectCurrentProject(project) {
         this.currentProject = project; 
         this.renderProjects();
         this.renderTodos();
+        this.updateProjectHeader();
     }
 
     toggleModal(modalId, show) {
         const modal = document.getElementById(modalId);
         if (show) {
-            modal.classList.add('visible');
             modal.classList.remove('hidden');
+            modal.classList.add('visible');
         } else {
-            modal.classList.add('hidden');
             modal.classList.remove('visible');
+            modal.classList.add('hidden');
         }
     }
     
-    
+
+    updateProjectHeader() {
+        const projectHeaderElement = document.getElementById('project-title');
+        const projectHeaderText = projectHeaderElement.querySelector('.project-title-text');
+
+        if (this.currentProject) {
+            projectHeaderText.textContent = this.currentProject.name;
+        } else {
+            projectHeaderText.textContent = 'Select a Project';
+        }
+    }
     
     showTodoModal(todo = null) {
         // Fill the form with the todo details if editing, otherwise clear the form
@@ -197,26 +211,25 @@ class TodoApp {
             return;
         }
 
-        const todoTitle = todoElement.querySelector('.todo-title').textContent.split(' - Due: ')[0];
+        const todoTitle = todoElement.querySelector('.todo-title').textContent;
         const todo = this.currentProject.getTodos().find(t => t.title === todoTitle);
 
         if (todo) {
-            if (event.target.classList.contains('edit-todo') || event.target.closest('.edit-todo')) {
+            if (event.target.classList.contains('mark-complete') || event.target.closest('.mark-complete')) {
+                todo.completed = !todo.completed;
+                this.renderTodos();
+            } else if (event.target.classList.contains('edit-todo') || event.target.closest('.edit-todo')) {
                 this.showTodoModal(todo);
             } else if (event.target.classList.contains('delete-todo') || event.target.closest('.delete-todo')) {
                 if (confirm("Are you sure you want to delete this todo?")) {
                     this.currentProject.removeTodo(todo);
                     this.renderTodos();
                 }
-            } else if (event.target.classList.contains('mark-complete')) {
-                todo.completed = !todo.completed;
-                this.renderTodos();
             }
         } else {
             console.error("Todo not found for action.");
         }
     }
-
 
     renderTodos() {
         const todoContainer = document.getElementById('todo-list');
@@ -226,19 +239,23 @@ class TodoApp {
                 const todoElement = document.createElement('li');
                 todoElement.className = `todo-item ${todo.completed ? 'completed' : ''}`;
                 todoElement.innerHTML = `
-                    <input type="checkbox" class="mark-complete" ${todo.completed ? 'checked' : ''}>
+                    <label class="priority-circle ${todo.priority}">
+                        <input type="checkbox" class="mark-complete" ${todo.completed ? 'checked' : ''}>
+                    </label>
                     <span class="todo-details">
                         <span class="todo-title">${todo.title}</span>
                         <span class="todo-due-date">Due: ${todo.dueDate}</span>
+                        <span class="todo-description">${todo.description}</span>
                     </span>
-                    <button class="edit-todo"><i class="fas fa-edit"></i></button>
-                    <button class="delete-todo"><i class="fas fa-trash-alt"></i></button>
+                    <div class="todo-actions">
+                        <button class="edit-todo"><i class="fas fa-edit"></i></button>
+                        <button class="delete-todo"><i class="fas fa-trash-alt"></i></button>
+                    </div>
                 `;
                 todoContainer.appendChild(todoElement);
             });
         }
     }
-    
 }
 
 // Initialize the TodoApp when the DOM is fully loaded

@@ -3,11 +3,23 @@
     --secondary-color: #6c757d;
     --background-color: #f8f9fa;
     --text-color: #212529;
-    --white: #fff;
+    --white: #ffffff;
+    --black: #000000;
     --light-gray: #f9f9f9;
     --dark-gray: #e9e9e9;
     --dark-blue: #1f4068;
     --hover-blue: #0056b3;
+    --modal-overlay-bg: rgba(0, 0, 0, 0.5);
+    --modal-bg: #fff;
+    --modal-header-bg: #007bff; /* Changed for better contrast */
+    --modal-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    --modal-border-radius: 8px;
+    --close-button-color: #aaa;
+    --close-button-hover: #000;
+    --input-border: #ddd;
+    --input-border-focus: #007bff;
+    --input-bg: #dedcdc;
+    --input-text-color: #000;
 }
 
 /* Base Styles */
@@ -34,14 +46,24 @@ body, html {
     grid-area: header;
     background-color: var(--primary-color);
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    align-items: flex-end;
+    justify-content: flex-start;
     font-size: 24px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    padding: 20px;
+    padding: 40px 0px 0px 35px;
     color: var(--white);
 }
 
+.header h1 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+}
+
+.header i {
+    font-size: 1.5em;
+}
 .sidebar {
     grid-area: sidebar;
     background-color: var(--secondary-color);
@@ -56,17 +78,17 @@ h2 {
 
 .sidebar button#add-project,
 .main-content button#add-todo {
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  background-color: var(--primary-color);
-  border: none;
-  cursor: pointer;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background-color: var(--primary-color);
+    border: none;
+    cursor: pointer;
 }
 
 .hidden {
@@ -74,7 +96,9 @@ h2 {
 }
 
 .visible {
-    display: block !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
 }
 
 .modal {
@@ -86,32 +110,104 @@ h2 {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: var(--modal-overlay-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .modal-content {
-    background-color: var(--white);
-    margin: 15% auto;
+    background-color: var(--modal-bg);
+    border-radius: var(--modal-border-radius);
+    box-shadow: var(--modal-shadow);
     padding: 20px;
-    border: 1px solid #888;
     width: 50%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    color: var(--text-color);
-    z-index: 1000;
+    max-width: 600px;
     position: relative;
+    animation: slide-down 0.3s ease-out;
+}
+
+@keyframes slide-down {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-header {
+    background-color: var(--modal-header-bg);
+    padding: 15px;
+    border-radius: var(--modal-border-radius) var(--modal-border-radius) 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: -20px -20px 20px -20px;
+    color: var(--white); /* Ensure the text color is readable */
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 1.5em;
 }
 
 .close-button {
-    color: #aaa;
-    float: right;
+    color: var(--close-button-color);
     font-size: 28px;
     font-weight: bold;
     cursor: pointer;
+    transition: color 0.2s;
 }
 
 .close-button:hover,
 .close-button:focus {
-    color: black;
+    color: var(--close-button-hover);
+}
+
+.modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Increased gap for more spacing */
+    padding: 20px;
+}
+
+input[type="text"],
+input[type="date"],
+select,
+textarea {
+    width: 100%;
+    padding: 12px; /* Increased padding for better spacing */
+    margin-top: 10px; /* Increased margin for better spacing */
+    border: 1px solid var(--input-border);
+    border-radius: 4px;
+    background-color: var(--input-bg);
+    color: var(--input-text-color);
+    transition: border-color 0.2s;
+}
+
+input[type="text"]:focus,
+input[type="date"]:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--input-border-focus);
+    outline: none;
+}
+
+button {
+    padding: 12px; /* Increased padding for consistency */
+    border: none;
+    border-radius: 4px;
+    background-color: var(--primary-color);
+    color: var(--white);
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+button:hover {
+    background-color: var(--hover-blue);
 }
 
 .main-content {
@@ -170,9 +266,9 @@ h2 {
 }
 
 .calendar-icon {
-  margin-right: 10px;
-  font-size: 48px;
-  vertical-align: middle;
+    margin-right: 10px;
+    font-size: 48px;
+    vertical-align: middle;
 }
 
 ul {
@@ -193,7 +289,7 @@ li {
     cursor: pointer;
     transition: background-color 0.3s;
     font-size: 16px;
-    color: var(--white);
+    color: var(--black);
 }
 
 li:hover, 
@@ -222,7 +318,12 @@ li.active {
     color: var(--white);
 }
 #project-list li{
-    color: var(--primary-color);
+    color: var (--primary-color);
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+#project-list li:hover {
+    background-color: var(--dark-gray);
 }
 
 #project-list li.active {
@@ -236,11 +337,11 @@ input[type="date"],
 select, 
 textarea {
     width: 100%;
-    padding: 8px;
-    margin-top: 5px;
+    padding: 12px; /* Increased padding for consistency */
+    margin-top: 10px; /* Increased margin for consistency */
     border: none;
-    background-color: var(--primary-color);
-    color: var(--white);
+    background-color: var(--input-bg);
+    color: var(--input-text-color);
     cursor: pointer;
 }
 
@@ -248,7 +349,7 @@ button:hover {
     background-color: var(--hover-blue);
 }
 
-/* Todo ITem Styles */
+/* Todo Item Styles */
 .todo-item {
     display: flex;
     align-items: center;
@@ -263,7 +364,52 @@ button:hover {
     color: var(--primary-color);
 }
 
-.todo-item.completed {
+.priority-circle {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    margin-right: 10px;
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.priority-circle input {
+    opacity: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    cursor: pointer;
+}
+
+.priority-circle.low {
+    background-color: green;
+}
+
+.priority-circle.medium {
+    background-color: yellow;
+}
+
+.priority-circle.high {
+    background-color: red;
+}
+
+.todo-item.completed .priority-circle.low {
+    background-color: lightgreen;
+}
+
+.todo-item.completed .priority-circle.medium {
+    background-color: lightyellow;
+}
+
+.todo-item.completed .priority-circle.high {
+    background-color: pink;
+}
+
+.todo-item.completed .todo-title, 
+.todo-item.completed .todo-due-date,
+.todo-item.completed .todo-description {
     text-decoration: line-through;
     opacity: 0.6;
 }
@@ -289,42 +435,38 @@ button:hover {
     color: var(--secondary-color);
 }
 
-/* Checkbox styles */
-.mark-complete {
-    cursor: pointer;
+.todo-description {
+    font-size: 14px;
+    color: var(--secondary-color);
+    margin-top: 5px;
 }
 
-/* Button Styles */
-.todo-item button {
+.todo-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.todo-actions button {
     background: none;
     border: none;
     cursor: pointer;
     color: var(--text-color);
     font-size: 1em;
-    margin-left: 5px;
     padding: 3px 5px;
     transition: color 0.3s;
     width: auto;
 }
 
-.todo-item button:hover {
+.todo-actions button:hover {
     color: var(--primary-color);
-}
-
-.todo-item .edit-todo i,
-.todo-item .delete-todo i {
-    font-size: 0.8em;
-    padding: 5px;
-}
-
-.completed .todo-title, 
-.completed .todo-due-date {
-    text-decoration: line-through;
 }
 
 @media (max-width: 768px) {
     .app-container {
         grid-template-columns: 1fr;
-        grid-template-areas: "header" "sidebar" "main";
+        grid-template-areas: 
+        "header" 
+        "sidebar" 
+        "main";
     }
 }

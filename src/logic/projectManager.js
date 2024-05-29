@@ -7,7 +7,7 @@ class ProjectManager {
     }
 
     createDefaultProject() {
-        const defaultProject = new Project("default");
+        const defaultProject = new Project("Default Project");
         this.addProject(defaultProject);
         return defaultProject;
     }

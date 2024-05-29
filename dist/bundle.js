@@ -26,11 +26,23 @@ ___CSS_LOADER_EXPORT___.push([module.id, `:root {
     --secondary-color: #6c757d;
     --background-color: #f8f9fa;
     --text-color: #212529;
-    --white: #fff;
+    --white: #ffffff;
+    --black: #000000;
     --light-gray: #f9f9f9;
     --dark-gray: #e9e9e9;
     --dark-blue: #1f4068;
     --hover-blue: #0056b3;
+    --modal-overlay-bg: rgba(0, 0, 0, 0.5);
+    --modal-bg: #fff;
+    --modal-header-bg: #007bff; /* Changed for better contrast */
+    --modal-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    --modal-border-radius: 8px;
+    --close-button-color: #aaa;
+    --close-button-hover: #000;
+    --input-border: #ddd;
+    --input-border-focus: #007bff;
+    --input-bg: #dedcdc;
+    --input-text-color: #000;
 }
 
 /* Base Styles */
@@ -57,14 +69,24 @@ body, html {
     grid-area: header;
     background-color: var(--primary-color);
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    align-items: flex-end;
+    justify-content: flex-start;
     font-size: 24px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    padding: 20px;
+    padding: 40px 0px 0px 35px;
     color: var(--white);
 }
 
+.header h1 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+}
+
+.header i {
+    font-size: 1.5em;
+}
 .sidebar {
     grid-area: sidebar;
     background-color: var(--secondary-color);
@@ -79,17 +101,17 @@ h2 {
 
 .sidebar button#add-project,
 .main-content button#add-todo {
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  background-color: var(--primary-color);
-  border: none;
-  cursor: pointer;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background-color: var(--primary-color);
+    border: none;
+    cursor: pointer;
 }
 
 .hidden {
@@ -97,7 +119,9 @@ h2 {
 }
 
 .visible {
-    display: block !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
 }
 
 .modal {
@@ -109,32 +133,104 @@ h2 {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: var(--modal-overlay-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .modal-content {
-    background-color: var(--white);
-    margin: 15% auto;
+    background-color: var(--modal-bg);
+    border-radius: var(--modal-border-radius);
+    box-shadow: var(--modal-shadow);
     padding: 20px;
-    border: 1px solid #888;
     width: 50%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    color: var(--text-color);
-    z-index: 1000;
+    max-width: 600px;
     position: relative;
+    animation: slide-down 0.3s ease-out;
+}
+
+@keyframes slide-down {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-header {
+    background-color: var(--modal-header-bg);
+    padding: 15px;
+    border-radius: var(--modal-border-radius) var(--modal-border-radius) 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: -20px -20px 20px -20px;
+    color: var(--white); /* Ensure the text color is readable */
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 1.5em;
 }
 
 .close-button {
-    color: #aaa;
-    float: right;
+    color: var(--close-button-color);
     font-size: 28px;
     font-weight: bold;
     cursor: pointer;
+    transition: color 0.2s;
 }
 
 .close-button:hover,
 .close-button:focus {
-    color: black;
+    color: var(--close-button-hover);
+}
+
+.modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Increased gap for more spacing */
+    padding: 20px;
+}
+
+input[type="text"],
+input[type="date"],
+select,
+textarea {
+    width: 100%;
+    padding: 12px; /* Increased padding for better spacing */
+    margin-top: 10px; /* Increased margin for better spacing */
+    border: 1px solid var(--input-border);
+    border-radius: 4px;
+    background-color: var(--input-bg);
+    color: var(--input-text-color);
+    transition: border-color 0.2s;
+}
+
+input[type="text"]:focus,
+input[type="date"]:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--input-border-focus);
+    outline: none;
+}
+
+button {
+    padding: 12px; /* Increased padding for consistency */
+    border: none;
+    border-radius: 4px;
+    background-color: var(--primary-color);
+    color: var(--white);
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+button:hover {
+    background-color: var(--hover-blue);
 }
 
 .main-content {
@@ -193,9 +289,9 @@ h2 {
 }
 
 .calendar-icon {
-  margin-right: 10px;
-  font-size: 48px;
-  vertical-align: middle;
+    margin-right: 10px;
+    font-size: 48px;
+    vertical-align: middle;
 }
 
 ul {
@@ -216,7 +312,7 @@ li {
     cursor: pointer;
     transition: background-color 0.3s;
     font-size: 16px;
-    color: var(--white);
+    color: var(--black);
 }
 
 li:hover, 
@@ -245,7 +341,12 @@ li.active {
     color: var(--white);
 }
 #project-list li{
-    color: var(--primary-color);
+    color: var (--primary-color);
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+#project-list li:hover {
+    background-color: var(--dark-gray);
 }
 
 #project-list li.active {
@@ -259,11 +360,11 @@ input[type="date"],
 select, 
 textarea {
     width: 100%;
-    padding: 8px;
-    margin-top: 5px;
+    padding: 12px; /* Increased padding for consistency */
+    margin-top: 10px; /* Increased margin for consistency */
     border: none;
-    background-color: var(--primary-color);
-    color: var(--white);
+    background-color: var(--input-bg);
+    color: var(--input-text-color);
     cursor: pointer;
 }
 
@@ -271,7 +372,7 @@ button:hover {
     background-color: var(--hover-blue);
 }
 
-/* Todo ITem Styles */
+/* Todo Item Styles */
 .todo-item {
     display: flex;
     align-items: center;
@@ -286,7 +387,52 @@ button:hover {
     color: var(--primary-color);
 }
 
-.todo-item.completed {
+.priority-circle {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    margin-right: 10px;
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.priority-circle input {
+    opacity: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    cursor: pointer;
+}
+
+.priority-circle.low {
+    background-color: green;
+}
+
+.priority-circle.medium {
+    background-color: yellow;
+}
+
+.priority-circle.high {
+    background-color: red;
+}
+
+.todo-item.completed .priority-circle.low {
+    background-color: lightgreen;
+}
+
+.todo-item.completed .priority-circle.medium {
+    background-color: lightyellow;
+}
+
+.todo-item.completed .priority-circle.high {
+    background-color: pink;
+}
+
+.todo-item.completed .todo-title, 
+.todo-item.completed .todo-due-date,
+.todo-item.completed .todo-description {
     text-decoration: line-through;
     opacity: 0.6;
 }
@@ -312,46 +458,42 @@ button:hover {
     color: var(--secondary-color);
 }
 
-/* Checkbox styles */
-.mark-complete {
-    cursor: pointer;
+.todo-description {
+    font-size: 14px;
+    color: var(--secondary-color);
+    margin-top: 5px;
 }
 
-/* Button Styles */
-.todo-item button {
+.todo-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.todo-actions button {
     background: none;
     border: none;
     cursor: pointer;
     color: var(--text-color);
     font-size: 1em;
-    margin-left: 5px;
     padding: 3px 5px;
     transition: color 0.3s;
     width: auto;
 }
 
-.todo-item button:hover {
+.todo-actions button:hover {
     color: var(--primary-color);
-}
-
-.todo-item .edit-todo i,
-.todo-item .delete-todo i {
-    font-size: 0.8em;
-    padding: 5px;
-}
-
-.completed .todo-title, 
-.completed .todo-due-date {
-    text-decoration: line-through;
 }
 
 @media (max-width: 768px) {
     .app-container {
         grid-template-columns: 1fr;
-        grid-template-areas: "header" "sidebar" "main";
+        grid-template-areas: 
+        "header" 
+        "sidebar" 
+        "main";
     }
 }
-`, "",{"version":3,"sources":["webpack://./src/styles.css"],"names":[],"mappings":"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","sourcesContent":[":root {\n    --primary-color: #007bff;\n    --secondary-color: #6c757d;\n    --background-color: #f8f9fa;\n    --text-color: #212529;\n    --white: #fff;\n    --light-gray: #f9f9f9;\n    --dark-gray: #e9e9e9;\n    --dark-blue: #1f4068;\n    --hover-blue: #0056b3;\n}\n\n/* Base Styles */\nbody, html {\n    margin: 0;\n    padding: 0;\n    height: 100%;\n    font-family: Arial, sans-serif;\n    background-color: var(--background-color);\n    color: var(--text-color);\n}\n\n.app-container {\n    display: grid;\n    grid-template-columns: 1fr 4fr;\n    grid-template-rows: min-content auto;\n    grid-template-areas: \n        \"header header\"\n        \"sidebar main\";\n    height: 100vh;\n}\n\n.header {\n    grid-area: header;\n    background-color: var(--primary-color);\n    display: flex;\n    align-items: center;\n    justify-content: space-between;\n    font-size: 24px;\n    box-shadow: 0 2px 5px rgba(0,0,0,0.2);\n    padding: 20px;\n    color: var(--white);\n}\n\n.sidebar {\n    grid-area: sidebar;\n    background-color: var(--secondary-color);\n    overflow-y: auto;\n    padding: 20px;\n}\n\nh2 {\n    margin: 0;\n    font-size: 2.5em;\n}\n\n.sidebar button#add-project,\n.main-content button#add-todo {\n  border-radius: 50%;\n  width: 30px;\n  height: 30px;\n  padding: 0;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  overflow: hidden;\n  background-color: var(--primary-color);\n  border: none;\n  cursor: pointer;\n}\n\n.hidden {\n    display: none !important;\n}\n\n.visible {\n    display: block !important;\n}\n\n.modal {\n    display: none;\n    position: fixed;\n    z-index: 1;\n    left: 0;\n    top: 0;\n    width: 100%;\n    height: 100%;\n    overflow: auto;\n    background-color: rgba(0, 0, 0, 0.4);\n}\n\n.modal-content {\n    background-color: var(--white);\n    margin: 15% auto;\n    padding: 20px;\n    border: 1px solid #888;\n    width: 50%;\n    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);\n    color: var(--text-color);\n    z-index: 1000;\n    position: relative;\n}\n\n.close-button {\n    color: #aaa;\n    float: right;\n    font-size: 28px;\n    font-weight: bold;\n    cursor: pointer;\n}\n\n.close-button:hover,\n.close-button:focus {\n    color: black;\n}\n\n.main-content {\n    grid-area: main;\n    overflow-y: auto;\n    display: flex;\n    flex-direction: column;\n    padding: 40px 40px;\n}\n\n.project-header,\n.todo-header {\n    display: flex;\n    align-items: center;\n    margin-bottom: 10px;\n    padding-bottom: 10px;\n    border-bottom: 1px solid var(--primary-color);\n    justify-content: space-between;\n}\n\n#project-title {\n    margin-bottom: 20px;\n    text-align: center;\n    padding-bottom: 10px;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    position: relative;\n}\n\n.project-actions {\n    display: flex;\n    gap: 10px;\n    justify-content: flex-end;\n}\n\n.project-actions button {\n    background: none;\n    border: none;\n    cursor: pointer;\n    color: var(--text-color);\n    font-size: 1.2em;\n}\n\n.project-actions button:hover {\n    color: var(--primary-color);\n}\n\n.title-with-icon {\n    border-bottom: 1px solid var(--primary-color);\n    padding-bottom: 10px;\n    display: inline-flex;\n    align-items: center;\n    gap: 10px;\n    justify-content: center;\n}\n\n.calendar-icon {\n  margin-right: 10px;\n  font-size: 48px;\n  vertical-align: middle;\n}\n\nul {\n    list-style: none;\n    margin-top: 0;\n    padding: 0;\n}\n\nli {\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    background-color: var(--light-gray);\n    margin-bottom: 8px;\n    padding: 10px 15px;\n    border-radius: 4px;\n    box-shadow: 0 2px 5px rgba(0,0,0,0.1);\n    cursor: pointer;\n    transition: background-color 0.3s;\n    font-size: 16px;\n    color: var(--white);\n}\n\nli:hover, \n.task-filters li:hover,\n.task-filters li.active {\n    background-color: var(--dark-gray);\n}\n\n.task-filters li {\n    display: flex;\n    align-items: center;\n    gap: 8px;\n    background-color: var(--dark-blue);\n}\n\nli.active {\n    background-color: var(--primary-color);\n}\n\n#todo-list li {\n    color: var(--primary-color);\n}\n\n#todo-list li.active {\n    background-color: var(--primary-color);\n    color: var(--white);\n}\n#project-list li{\n    color: var(--primary-color);\n}\n\n#project-list li.active {\n    background-color: var(--primary-color);\n    color: var(--white);\n}\n\nbutton, \ninput[type=\"text\"],\ninput[type=\"date\"], \nselect, \ntextarea {\n    width: 100%;\n    padding: 8px;\n    margin-top: 5px;\n    border: none;\n    background-color: var(--primary-color);\n    color: var(--white);\n    cursor: pointer;\n}\n\nbutton:hover {\n    background-color: var(--hover-blue);\n}\n\n/* Todo ITem Styles */\n.todo-item {\n    display: flex;\n    align-items: center;\n    justify-content: space-between;\n    background-color: var(--light-gray);\n    margin-bottom: 8px;\n    padding: 10px 15px;\n    border-radius: 4px;\n    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);\n    cursor: pointer;\n    transition: background-color 0.3s;\n    color: var(--primary-color);\n}\n\n.todo-item.completed {\n    text-decoration: line-through;\n    opacity: 0.6;\n}\n\n.todo-item:hover {\n    background-color: var(--dark-gray);\n}\n\n.todo-details {\n    display: flex;\n    flex-direction: column;\n    flex-grow: 1;\n    margin-left: 10px;\n}\n\n.todo-title {\n    font-size: 16px;\n    font-weight: bold;\n}\n\n.todo-due-date {\n    font-size: 14px;\n    color: var(--secondary-color);\n}\n\n/* Checkbox styles */\n.mark-complete {\n    cursor: pointer;\n}\n\n/* Button Styles */\n.todo-item button {\n    background: none;\n    border: none;\n    cursor: pointer;\n    color: var(--text-color);\n    font-size: 1em;\n    margin-left: 5px;\n    padding: 3px 5px;\n    transition: color 0.3s;\n    width: auto;\n}\n\n.todo-item button:hover {\n    color: var(--primary-color);\n}\n\n.todo-item .edit-todo i,\n.todo-item .delete-todo i {\n    font-size: 0.8em;\n    padding: 5px;\n}\n\n.completed .todo-title, \n.completed .todo-due-date {\n    text-decoration: line-through;\n}\n\n@media (max-width: 768px) {\n    .app-container {\n        grid-template-columns: 1fr;\n        grid-template-areas: \"header\" \"sidebar\" \"main\";\n    }\n}\n"],"sourceRoot":""}]);
+`, "",{"version":3,"sources":["webpack://./src/styles.css"],"names":[],"mappings":"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","sourcesContent":[":root {\n    --primary-color: #007bff;\n    --secondary-color: #6c757d;\n    --background-color: #f8f9fa;\n    --text-color: #212529;\n    --white: #ffffff;\n    --black: #000000;\n    --light-gray: #f9f9f9;\n    --dark-gray: #e9e9e9;\n    --dark-blue: #1f4068;\n    --hover-blue: #0056b3;\n    --modal-overlay-bg: rgba(0, 0, 0, 0.5);\n    --modal-bg: #fff;\n    --modal-header-bg: #007bff; /* Changed for better contrast */\n    --modal-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);\n    --modal-border-radius: 8px;\n    --close-button-color: #aaa;\n    --close-button-hover: #000;\n    --input-border: #ddd;\n    --input-border-focus: #007bff;\n    --input-bg: #dedcdc;\n    --input-text-color: #000;\n}\n\n/* Base Styles */\nbody, html {\n    margin: 0;\n    padding: 0;\n    height: 100%;\n    font-family: Arial, sans-serif;\n    background-color: var(--background-color);\n    color: var(--text-color);\n}\n\n.app-container {\n    display: grid;\n    grid-template-columns: 1fr 4fr;\n    grid-template-rows: min-content auto;\n    grid-template-areas: \n        \"header header\"\n        \"sidebar main\";\n    height: 100vh;\n}\n\n.header {\n    grid-area: header;\n    background-color: var(--primary-color);\n    display: flex;\n    align-items: flex-end;\n    justify-content: flex-start;\n    font-size: 24px;\n    box-shadow: 0 2px 5px rgba(0,0,0,0.2);\n    padding: 40px 0px 0px 35px;\n    color: var(--white);\n}\n\n.header h1 {\n    display: flex;\n    align-items: center;\n    gap: 10px;\n    margin: 0;\n}\n\n.header i {\n    font-size: 1.5em;\n}\n.sidebar {\n    grid-area: sidebar;\n    background-color: var(--secondary-color);\n    overflow-y: auto;\n    padding: 20px;\n}\n\nh2 {\n    margin: 0;\n    font-size: 2.5em;\n}\n\n.sidebar button#add-project,\n.main-content button#add-todo {\n    border-radius: 50%;\n    width: 30px;\n    height: 30px;\n    padding: 0;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    overflow: hidden;\n    background-color: var(--primary-color);\n    border: none;\n    cursor: pointer;\n}\n\n.hidden {\n    display: none !important;\n}\n\n.visible {\n    display: flex !important;\n    align-items: center;\n    justify-content: center;\n}\n\n.modal {\n    display: none;\n    position: fixed;\n    z-index: 1;\n    left: 0;\n    top: 0;\n    width: 100%;\n    height: 100%;\n    overflow: auto;\n    background-color: var(--modal-overlay-bg);\n    display: flex;\n    align-items: center;\n    justify-content: center;\n}\n\n.modal-content {\n    background-color: var(--modal-bg);\n    border-radius: var(--modal-border-radius);\n    box-shadow: var(--modal-shadow);\n    padding: 20px;\n    width: 50%;\n    max-width: 600px;\n    position: relative;\n    animation: slide-down 0.3s ease-out;\n}\n\n@keyframes slide-down {\n    from {\n        transform: translateY(-50px);\n        opacity: 0;\n    }\n    to {\n        transform: translateY(0);\n        opacity: 1;\n    }\n}\n\n.modal-header {\n    background-color: var(--modal-header-bg);\n    padding: 15px;\n    border-radius: var(--modal-border-radius) var(--modal-border-radius) 0 0;\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    margin: -20px -20px 20px -20px;\n    color: var(--white); /* Ensure the text color is readable */\n}\n\n.modal-header h2 {\n    margin: 0;\n    font-size: 1.5em;\n}\n\n.close-button {\n    color: var(--close-button-color);\n    font-size: 28px;\n    font-weight: bold;\n    cursor: pointer;\n    transition: color 0.2s;\n}\n\n.close-button:hover,\n.close-button:focus {\n    color: var(--close-button-hover);\n}\n\n.modal-body {\n    display: flex;\n    flex-direction: column;\n    gap: 20px; /* Increased gap for more spacing */\n    padding: 20px;\n}\n\ninput[type=\"text\"],\ninput[type=\"date\"],\nselect,\ntextarea {\n    width: 100%;\n    padding: 12px; /* Increased padding for better spacing */\n    margin-top: 10px; /* Increased margin for better spacing */\n    border: 1px solid var(--input-border);\n    border-radius: 4px;\n    background-color: var(--input-bg);\n    color: var(--input-text-color);\n    transition: border-color 0.2s;\n}\n\ninput[type=\"text\"]:focus,\ninput[type=\"date\"]:focus,\nselect:focus,\ntextarea:focus {\n    border-color: var(--input-border-focus);\n    outline: none;\n}\n\nbutton {\n    padding: 12px; /* Increased padding for consistency */\n    border: none;\n    border-radius: 4px;\n    background-color: var(--primary-color);\n    color: var(--white);\n    cursor: pointer;\n    transition: background-color 0.2s;\n}\n\nbutton:hover {\n    background-color: var(--hover-blue);\n}\n\n.main-content {\n    grid-area: main;\n    overflow-y: auto;\n    display: flex;\n    flex-direction: column;\n    padding: 40px 40px;\n}\n\n.project-header,\n.todo-header {\n    display: flex;\n    align-items: center;\n    margin-bottom: 10px;\n    padding-bottom: 10px;\n    border-bottom: 1px solid var(--primary-color);\n    justify-content: space-between;\n}\n\n#project-title {\n    margin-bottom: 20px;\n    text-align: center;\n    padding-bottom: 10px;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    position: relative;\n}\n\n.project-actions {\n    display: flex;\n    gap: 10px;\n    justify-content: flex-end;\n}\n\n.project-actions button {\n    background: none;\n    border: none;\n    cursor: pointer;\n    color: var(--text-color);\n    font-size: 1.2em;\n}\n\n.project-actions button:hover {\n    color: var(--primary-color);\n}\n\n.title-with-icon {\n    border-bottom: 1px solid var(--primary-color);\n    padding-bottom: 10px;\n    display: inline-flex;\n    align-items: center;\n    gap: 10px;\n    justify-content: center;\n}\n\n.calendar-icon {\n    margin-right: 10px;\n    font-size: 48px;\n    vertical-align: middle;\n}\n\nul {\n    list-style: none;\n    margin-top: 0;\n    padding: 0;\n}\n\nli {\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    background-color: var(--light-gray);\n    margin-bottom: 8px;\n    padding: 10px 15px;\n    border-radius: 4px;\n    box-shadow: 0 2px 5px rgba(0,0,0,0.1);\n    cursor: pointer;\n    transition: background-color 0.3s;\n    font-size: 16px;\n    color: var(--black);\n}\n\nli:hover, \n.task-filters li:hover,\n.task-filters li.active {\n    background-color: var(--dark-gray);\n}\n\n.task-filters li {\n    display: flex;\n    align-items: center;\n    gap: 8px;\n    background-color: var(--dark-blue);\n}\n\nli.active {\n    background-color: var(--primary-color);\n}\n\n#todo-list li {\n    color: var(--primary-color);\n}\n\n#todo-list li.active {\n    background-color: var(--primary-color);\n    color: var(--white);\n}\n#project-list li{\n    color: var (--primary-color);\n    cursor: pointer;\n    transition: background-color 0.3s;\n}\n#project-list li:hover {\n    background-color: var(--dark-gray);\n}\n\n#project-list li.active {\n    background-color: var(--primary-color);\n    color: var(--white);\n}\n\nbutton, \ninput[type=\"text\"],\ninput[type=\"date\"], \nselect, \ntextarea {\n    width: 100%;\n    padding: 12px; /* Increased padding for consistency */\n    margin-top: 10px; /* Increased margin for consistency */\n    border: none;\n    background-color: var(--input-bg);\n    color: var(--input-text-color);\n    cursor: pointer;\n}\n\nbutton:hover {\n    background-color: var(--hover-blue);\n}\n\n/* Todo Item Styles */\n.todo-item {\n    display: flex;\n    align-items: center;\n    justify-content: space-between;\n    background-color: var(--light-gray);\n    margin-bottom: 8px;\n    padding: 10px 15px;\n    border-radius: 4px;\n    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);\n    cursor: pointer;\n    transition: background-color 0.3s;\n    color: var(--primary-color);\n}\n\n.priority-circle {\n    width: 15px;\n    height: 15px;\n    border-radius: 50%;\n    margin-right: 10px;\n    position: relative;\n    display: inline-block;\n    cursor: pointer;\n}\n\n.priority-circle input {\n    opacity: 0;\n    position: absolute;\n    width: 100%;\n    height: 100%;\n    margin: 0;\n    cursor: pointer;\n}\n\n.priority-circle.low {\n    background-color: green;\n}\n\n.priority-circle.medium {\n    background-color: yellow;\n}\n\n.priority-circle.high {\n    background-color: red;\n}\n\n.todo-item.completed .priority-circle.low {\n    background-color: lightgreen;\n}\n\n.todo-item.completed .priority-circle.medium {\n    background-color: lightyellow;\n}\n\n.todo-item.completed .priority-circle.high {\n    background-color: pink;\n}\n\n.todo-item.completed .todo-title, \n.todo-item.completed .todo-due-date,\n.todo-item.completed .todo-description {\n    text-decoration: line-through;\n    opacity: 0.6;\n}\n\n.todo-item:hover {\n    background-color: var(--dark-gray);\n}\n\n.todo-details {\n    display: flex;\n    flex-direction: column;\n    flex-grow: 1;\n    margin-left: 10px;\n}\n\n.todo-title {\n    font-size: 16px;\n    font-weight: bold;\n}\n\n.todo-due-date {\n    font-size: 14px;\n    color: var(--secondary-color);\n}\n\n.todo-description {\n    font-size: 14px;\n    color: var(--secondary-color);\n    margin-top: 5px;\n}\n\n.todo-actions {\n    display: flex;\n    gap: 10px;\n}\n\n.todo-actions button {\n    background: none;\n    border: none;\n    cursor: pointer;\n    color: var(--text-color);\n    font-size: 1em;\n    padding: 3px 5px;\n    transition: color 0.3s;\n    width: auto;\n}\n\n.todo-actions button:hover {\n    color: var(--primary-color);\n}\n\n@media (max-width: 768px) {\n    .app-container {\n        grid-template-columns: 1fr;\n        grid-template-areas: \n        \"header\" \n        \"sidebar\" \n        \"main\";\n    }\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -909,7 +1051,7 @@ class ProjectManager {
     }
 
     createDefaultProject() {
-        const defaultProject = new _Project__WEBPACK_IMPORTED_MODULE_0__["default"]("default");
+        const defaultProject = new _Project__WEBPACK_IMPORTED_MODULE_0__["default"]("Default Project");
         this.addProject(defaultProject);
         return defaultProject;
     }
@@ -1043,11 +1185,12 @@ class TodoApp {
 
         // Delegate project edit and delete button clicks
         document.getElementById('project-list').addEventListener('click', (event) => {
+            const projectItem = event.target.closest('li');
             if (event.target.matches('.edit-project')) {
                 this.handleEditProject(event);
             } else if (event.target.matches('.delete-project')) {
                 this.handleDeleteProject(event);
-            } else if (event.target.matches('li')) {
+            } else if (projectItem) {
                 this.handleProjectClick(event);
             }
         });
@@ -1071,6 +1214,7 @@ class TodoApp {
             `;
             projectContainer.appendChild(projectElement);
         });
+        this.updateProjectHeader();
     }
 
     addProject() {
@@ -1119,25 +1263,37 @@ class TodoApp {
             this.selectCurrentProject(selectedProject);
         }
     }
+    
 
     selectCurrentProject(project) {
         this.currentProject = project; 
         this.renderProjects();
         this.renderTodos();
+        this.updateProjectHeader();
     }
 
     toggleModal(modalId, show) {
         const modal = document.getElementById(modalId);
         if (show) {
-            modal.classList.add('visible');
             modal.classList.remove('hidden');
+            modal.classList.add('visible');
         } else {
-            modal.classList.add('hidden');
             modal.classList.remove('visible');
+            modal.classList.add('hidden');
         }
     }
     
-    
+
+    updateProjectHeader() {
+        const projectHeaderElement = document.getElementById('project-title');
+        const projectHeaderText = projectHeaderElement.querySelector('.project-title-text');
+
+        if (this.currentProject) {
+            projectHeaderText.textContent = this.currentProject.name;
+        } else {
+            projectHeaderText.textContent = 'Select a Project';
+        }
+    }
     
     showTodoModal(todo = null) {
         // Fill the form with the todo details if editing, otherwise clear the form
@@ -1197,26 +1353,25 @@ class TodoApp {
             return;
         }
 
-        const todoTitle = todoElement.querySelector('.todo-title').textContent.split(' - Due: ')[0];
+        const todoTitle = todoElement.querySelector('.todo-title').textContent;
         const todo = this.currentProject.getTodos().find(t => t.title === todoTitle);
 
         if (todo) {
-            if (event.target.classList.contains('edit-todo') || event.target.closest('.edit-todo')) {
+            if (event.target.classList.contains('mark-complete') || event.target.closest('.mark-complete')) {
+                todo.completed = !todo.completed;
+                this.renderTodos();
+            } else if (event.target.classList.contains('edit-todo') || event.target.closest('.edit-todo')) {
                 this.showTodoModal(todo);
             } else if (event.target.classList.contains('delete-todo') || event.target.closest('.delete-todo')) {
                 if (confirm("Are you sure you want to delete this todo?")) {
                     this.currentProject.removeTodo(todo);
                     this.renderTodos();
                 }
-            } else if (event.target.classList.contains('mark-complete')) {
-                todo.completed = !todo.completed;
-                this.renderTodos();
             }
         } else {
             console.error("Todo not found for action.");
         }
     }
-
 
     renderTodos() {
         const todoContainer = document.getElementById('todo-list');
@@ -1226,19 +1381,23 @@ class TodoApp {
                 const todoElement = document.createElement('li');
                 todoElement.className = `todo-item ${todo.completed ? 'completed' : ''}`;
                 todoElement.innerHTML = `
-                    <input type="checkbox" class="mark-complete" ${todo.completed ? 'checked' : ''}>
+                    <label class="priority-circle ${todo.priority}">
+                        <input type="checkbox" class="mark-complete" ${todo.completed ? 'checked' : ''}>
+                    </label>
                     <span class="todo-details">
                         <span class="todo-title">${todo.title}</span>
                         <span class="todo-due-date">Due: ${todo.dueDate}</span>
+                        <span class="todo-description">${todo.description}</span>
                     </span>
-                    <button class="edit-todo"><i class="fas fa-edit"></i></button>
-                    <button class="delete-todo"><i class="fas fa-trash-alt"></i></button>
+                    <div class="todo-actions">
+                        <button class="edit-todo"><i class="fas fa-edit"></i></button>
+                        <button class="delete-todo"><i class="fas fa-trash-alt"></i></button>
+                    </div>
                 `;
                 todoContainer.appendChild(todoElement);
             });
         }
     }
-    
 }
 
 // Initialize the TodoApp when the DOM is fully loaded
