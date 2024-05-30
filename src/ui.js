@@ -15,6 +15,7 @@ class TodoApp {
         this.handleDeleteProject = this.handleDeleteProject.bind(this);
         this.handleTodoAction = this.handleTodoAction.bind(this);
         this.addProject = this.addProject.bind(this);
+        this.handleFilterClick = this.handleFilterClick.bind(this);
     }
 
     init() {
@@ -55,6 +56,12 @@ class TodoApp {
                 
         // Delegate todo actions (edit, delete, mark complete)
         document.getElementById('todo-list').addEventListener('click', this.handleTodoAction);
+
+        // Task filters 
+        const taskFilters = document.querySelectorAll('.task-filters li');
+        taskFilters.forEach(filter => {
+            filter.addEventListener('click', this.handleFilterClick);
+        });
     }
     
     renderProjects() {
@@ -122,6 +129,47 @@ class TodoApp {
         }
     }
     
+    handleFilterClick(event) {
+        const taskFilters = document.querySelectorAll('.task-filters li');
+        taskFilters.forEach(f => f.classList.remove('active'));
+        event.target.classList.add('active');
+        const filterType = event.target.getAttribute('data-filter');
+        this.filterTasks(filterType);
+    }
+
+    filterTasks(filterType) {
+        const todos = document.querySelectorAll('#todo-list li');
+        const today = new Date().toISOString().split('T')[0]; 
+
+        todos.forEach(todo => {
+            const dueDate = todo.querySelector('.todo-due-date').textContent.replace('Due: ', '');
+            const priority = todo.querySelector('.priority-circle').classList.contains('high') ? 'important' : '';
+            const completed = todo.classList.contains('completed');
+
+            switch (filterType) {
+                case 'all': 
+                    todo.style.display = 'flex';
+                    break;
+                case 'today':
+                    todo.style.display = (dueDate === today) ? 'flex' : 'none';
+                    break;
+                case 'week':
+                    const weekStart = new Date();
+                    const weekEnd = new Date();
+                    weekStart.setDate(weekStart.getDate() - weekStart.getDay());
+                    weekEnd.setDate(weekEnd.getDate() + (6 - weekEnd.getDay()));
+                    const dueDateObj = new Date(dueDate);
+                    todo.style.display = (dueDateObj >= weekStart && dueDateObj <= weekEnd) ? 'flex' : 'none';
+                    break;
+                case 'important':
+                    todo.style.display = (priority === 'important') ? 'flex' : 'none';
+                    break
+                case 'completed':
+                    todo.style.display = completed ? 'flex' : 'none';
+                    break;
+            }
+        });
+    }
 
     selectCurrentProject(project) {
         this.currentProject = project; 

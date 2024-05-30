@@ -21,19 +21,21 @@
                 <span id="close-project-modal" class="close-button">×</span>
             </div>
             <div class="modal-body">
-                <input type="text" id="new-project-name" placeholder="Enter new project name">
-                <button id="confirm-add-project">Add</button>
+                <form id="project-form">
+                    <input type="text" id="new-project-name" placeholder="Enter new project name">
+                    <button id="confirm-add-project">Add</button>
+                </form>
             </div>
         </div>
     </div>
     <!-- Sidebar for Projects -->
     <aside class="sidebar">
         <ul class="task-filters">
-            <li class="active"><i class="fas fa-list-ul"></i>All</li>
-            <li><i class="fas fa-calendar-day"></i>Today</li>
-            <li><i class="fas fa-calendar-week"></i>This Week</li>
-            <li><i class="fas fa-star"></i>Important</li>
-            <li><i class="fas fa-check"></i>Completed</li>
+            <li class="active" data-filter="all"><i class="fas fa-list-ul"></i>All</li>
+            <li data-filter="today"><i class="fas fa-calendar-day"></i>Today</li>
+            <li data-filter="week"><i class="fas fa-calendar-week"></i>This Week</li>
+            <li data-filter="important"><i class="fas fa-star"></i>Important</li>
+            <li data-filter="completed"><i class="fas fa-check"></i>Completed</li>
         </ul>
         <div class="project-header">
             <h2>Projects</h2>
