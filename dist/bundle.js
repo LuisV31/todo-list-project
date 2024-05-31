@@ -1070,12 +1070,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _Project__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Project */ "./src/logic/Project.js");
+/* harmony import */ var _storage_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../storage.js */ "./src/storage.js");
+
 
 
 class ProjectManager {
     constructor() {
-        this.projects = [];
-        this.currentProject = this.projects[0] || this.createDefaultProject();
+        this.projects = (0,_storage_js__WEBPACK_IMPORTED_MODULE_1__.loadProjects)() || [];
+        if (this.projects.length === 0) {
+            this.projects.push(this.createDefaultProject());
+        }
+        this.currentProject = this.projects[0] || null;
     }
 
     createDefaultProject() {
@@ -1085,14 +1090,13 @@ class ProjectManager {
     }
 
     addProject(project) {
-    if (!project.name || typeof project.name !== 'string' || this.findProjectByName(project.name)) {
-        console.error("Project name must be unique and valid string.");
-        return;
-    }
-    this.projects.push(project);
-    this.currentProject = project;
-    // Uncommenting this when save is added
-    // this.saveProjects();
+        if (!project.name || typeof project.name !== 'string' || this.findProjectByName(project.name)) {
+            console.error("Project name must be unique and valid string.");
+            return;
+        }
+        this.projects.push(project);
+        this.currentProject = project;
+        (0,_storage_js__WEBPACK_IMPORTED_MODULE_1__.saveProjects)(this.projects);
     }
     
     findProjectByName(name) {
@@ -1112,8 +1116,7 @@ class ProjectManager {
             if (this.currentProject && this.currentProject.name === name) {
                 this.currentProject = this.projects[0] || null;
             }
-            // Uncomment this line when save is added
-            // this.saveProjects();
+            (0,_storage_js__WEBPACK_IMPORTED_MODULE_1__.saveProjects)(this.projects);
             return true;
         }
         return false;
@@ -1123,8 +1126,7 @@ class ProjectManager {
         const project = this.findProjectByName(oldName);
         if (project && !this.findProjectByName(newName)) {
             project.name = newName;
-            // Uncomment this when save is added
-            // this.saveProjects();
+            (0,_storage_js__WEBPACK_IMPORTED_MODULE_1__.saveProjects)(this.projects);
             return true;
         }
         return false;
@@ -1134,27 +1136,72 @@ class ProjectManager {
         const project = this.findProjectByName(name);
         if (project) {
             this.currentProject = project;
+            (0,_storage_js__WEBPACK_IMPORTED_MODULE_1__.saveProjects)(this.projects);
         }
     }
 
     getCurrentProject() {
         return this.currentProject;
     }
-
-
-    // Placeholder for future localStorage methods
-    // saveProjects() {
-    //     localStorage.setItem('projects', JSON.stringify(this.projects));
-    // }
-
-    // loadProjects() {
-    //     const projects = localStorage.getItem('projects');
-    //     return projects ? JSON.parse(projects).map(projData => new Project(projData.name)) : null;
-    // }
-
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ProjectManager);
+
+/***/ }),
+
+/***/ "./src/storage.js":
+/*!************************!*\
+  !*** ./src/storage.js ***!
+  \************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   loadProjects: () => (/* binding */ loadProjects),
+/* harmony export */   saveProjects: () => (/* binding */ saveProjects)
+/* harmony export */ });
+/* harmony import */ var _logic_Project__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./logic/Project */ "./src/logic/Project.js");
+/* harmony import */ var _logic_Todo__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./logic/Todo */ "./src/logic/Todo.js");
+
+
+
+function saveProjects(projects) {
+    const projectsData = projects.map(project => ({
+        name: project.name,
+        todos: project.getTodos().map(todo => ({
+            title: todo.title, 
+            description: todo.description,
+            dueDate: todo.dueDate,
+            priority: todo.priority,
+            completed: todo.completed,
+            notes: todo.notes,
+            checklist: todo.checklist
+        }))
+    }));
+    localStorage.setItem('projects', JSON.stringify(projectsData));
+}
+
+function loadProjects() {
+    const projectsData = JSON.parse(localStorage.getItem('projects'));
+    if (!projectsData) return null;
+
+    return projectsData.map(projectData => {
+        const project = new _logic_Project__WEBPACK_IMPORTED_MODULE_0__["default"](projectData.name);
+        project.todos = projectData.todos.map(todoData => {
+            const todo = new _logic_Todo__WEBPACK_IMPORTED_MODULE_1__["default"](
+                todoData.title,
+                todoData.description,
+                todoData.dueDate,
+                todoData.priority
+            );
+            todo.completed = todoData.completed;
+            todo.notes = todoData.notes;
+            todo.checklist = todoData.checklist;
+            return todo;
+        });
+        return project;
+    });
+}
 
 /***/ }),
 
@@ -1168,9 +1215,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _logic_projectManager_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./logic/projectManager.js */ "./src/logic/projectManager.js");
 /* harmony import */ var _logic_Project_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./logic/Project.js */ "./src/logic/Project.js");
 /* harmony import */ var _logic_Todo_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./logic/Todo.js */ "./src/logic/Todo.js");
+/* harmony import */ var _storage_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./storage.js */ "./src/storage.js");
 
 
 
+ // Import the saveProjects function
 
 class TodoApp {
     constructor() {
@@ -1261,6 +1310,7 @@ class TodoApp {
             projectNameInput.value = '';
             this.renderProjects();
             this.selectCurrentProject(newProject);
+            (0,_storage_js__WEBPACK_IMPORTED_MODULE_3__.saveProjects)(this.projectManager.getProjects());
         }
     }
 
@@ -1272,6 +1322,7 @@ class TodoApp {
             if (this.projectManager.updateProjectName(oldName, newName)) {
                 this.renderProjects();
                 this.renderTodos();
+                (0,_storage_js__WEBPACK_IMPORTED_MODULE_3__.saveProjects)(this.projectManager.getProjects());
             } else {
                 alert("Project name must be unique and valid.");
             }
@@ -1288,6 +1339,7 @@ class TodoApp {
                 this.currentProject = this.projectManager.getProjects()[0] || null;
                 this.renderTodos();
             }
+            (0,_storage_js__WEBPACK_IMPORTED_MODULE_3__.saveProjects)(this.projectManager.getProjects());
         }
     }
     
@@ -1296,6 +1348,7 @@ class TodoApp {
         const selectedProject = this.projectManager.getProjects().find(project => project.name === clickedElement.querySelector('.project-name').textContent.trim());
         if (selectedProject) {
             this.selectCurrentProject(selectedProject);
+            (0,_storage_js__WEBPACK_IMPORTED_MODULE_3__.saveProjects)(this.projectManager.getProjects());
         }
     }
     
@@ -1346,6 +1399,7 @@ class TodoApp {
         this.renderProjects();
         this.renderTodos();
         this.updateProjectHeader();
+        (0,_storage_js__WEBPACK_IMPORTED_MODULE_3__.saveProjects)(this.projectManager.getProjects());
     }
 
     toggleModal(modalId, show) {
@@ -1411,6 +1465,7 @@ class TodoApp {
                 this.currentProject.addTodo(newTodo);
             }
             this.renderTodos();
+            (0,_storage_js__WEBPACK_IMPORTED_MODULE_3__.saveProjects)(this.projectManager.getProjects());
 
             // Clear the form fields
             titleElement.value = '';
@@ -1436,12 +1491,14 @@ class TodoApp {
             if (event.target.classList.contains('mark-complete') || event.target.closest('.mark-complete')) {
                 todo.completed = !todo.completed;
                 this.renderTodos();
+                (0,_storage_js__WEBPACK_IMPORTED_MODULE_3__.saveProjects)(this.projectManager.getProjects());
             } else if (event.target.classList.contains('edit-todo') || event.target.closest('.edit-todo')) {
                 this.showTodoModal(todo);
             } else if (event.target.classList.contains('delete-todo') || event.target.closest('.delete-todo')) {
                 if (confirm("Are you sure you want to delete this todo?")) {
                     this.currentProject.removeTodo(todo);
                     this.renderTodos();
+                    (0,_storage_js__WEBPACK_IMPORTED_MODULE_3__.saveProjects)(this.projectManager.getProjects());
                 }
             }
         } else {

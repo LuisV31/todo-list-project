@@ -1,6 +1,7 @@
 import ProjectManager from './logic/projectManager.js';
 import Project from './logic/Project.js';
 import Todo from './logic/Todo.js';
+import { saveProjects } from './storage.js'; // Import the saveProjects function
 
 class TodoApp {
     constructor() {
@@ -91,6 +92,7 @@ class TodoApp {
             projectNameInput.value = '';
             this.renderProjects();
             this.selectCurrentProject(newProject);
+            saveProjects(this.projectManager.getProjects());
         }
     }
 
@@ -102,6 +104,7 @@ class TodoApp {
             if (this.projectManager.updateProjectName(oldName, newName)) {
                 this.renderProjects();
                 this.renderTodos();
+                saveProjects(this.projectManager.getProjects());
             } else {
                 alert("Project name must be unique and valid.");
             }
@@ -118,6 +121,7 @@ class TodoApp {
                 this.currentProject = this.projectManager.getProjects()[0] || null;
                 this.renderTodos();
             }
+            saveProjects(this.projectManager.getProjects());
         }
     }
     
@@ -126,6 +130,7 @@ class TodoApp {
         const selectedProject = this.projectManager.getProjects().find(project => project.name === clickedElement.querySelector('.project-name').textContent.trim());
         if (selectedProject) {
             this.selectCurrentProject(selectedProject);
+            saveProjects(this.projectManager.getProjects());
         }
     }
     
@@ -176,6 +181,7 @@ class TodoApp {
         this.renderProjects();
         this.renderTodos();
         this.updateProjectHeader();
+        saveProjects(this.projectManager.getProjects());
     }
 
     toggleModal(modalId, show) {
@@ -241,6 +247,7 @@ class TodoApp {
                 this.currentProject.addTodo(newTodo);
             }
             this.renderTodos();
+            saveProjects(this.projectManager.getProjects());
 
             // Clear the form fields
             titleElement.value = '';
@@ -266,12 +273,14 @@ class TodoApp {
             if (event.target.classList.contains('mark-complete') || event.target.closest('.mark-complete')) {
                 todo.completed = !todo.completed;
                 this.renderTodos();
+                saveProjects(this.projectManager.getProjects());
             } else if (event.target.classList.contains('edit-todo') || event.target.closest('.edit-todo')) {
                 this.showTodoModal(todo);
             } else if (event.target.classList.contains('delete-todo') || event.target.closest('.delete-todo')) {
                 if (confirm("Are you sure you want to delete this todo?")) {
                     this.currentProject.removeTodo(todo);
                     this.renderTodos();
+                    saveProjects(this.projectManager.getProjects());
                 }
             }
         } else {

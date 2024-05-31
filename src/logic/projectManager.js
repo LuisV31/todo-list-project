@@ -1,9 +1,13 @@
 import Project from "./Project";
+import { saveProjects, loadProjects } from "../storage.js";
 
 class ProjectManager {
     constructor() {
-        this.projects = [];
-        this.currentProject = this.projects[0] || this.createDefaultProject();
+        this.projects = loadProjects() || [];
+        if (this.projects.length === 0) {
+            this.projects.push(this.createDefaultProject());
+        }
+        this.currentProject = this.projects[0] || null;
     }
 
     createDefaultProject() {
@@ -13,14 +17,13 @@ class ProjectManager {
     }
 
     addProject(project) {
-    if (!project.name || typeof project.name !== 'string' || this.findProjectByName(project.name)) {
-        console.error("Project name must be unique and valid string.");
-        return;
-    }
-    this.projects.push(project);
-    this.currentProject = project;
-    // Uncommenting this when save is added
-    // this.saveProjects();
+        if (!project.name || typeof project.name !== 'string' || this.findProjectByName(project.name)) {
+            console.error("Project name must be unique and valid string.");
+            return;
+        }
+        this.projects.push(project);
+        this.currentProject = project;
+        saveProjects(this.projects);
     }
     
     findProjectByName(name) {
@@ -40,8 +43,7 @@ class ProjectManager {
             if (this.currentProject && this.currentProject.name === name) {
                 this.currentProject = this.projects[0] || null;
             }
-            // Uncomment this line when save is added
-            // this.saveProjects();
+            saveProjects(this.projects);
             return true;
         }
         return false;
@@ -51,8 +53,7 @@ class ProjectManager {
         const project = this.findProjectByName(oldName);
         if (project && !this.findProjectByName(newName)) {
             project.name = newName;
-            // Uncomment this when save is added
-            // this.saveProjects();
+            saveProjects(this.projects);
             return true;
         }
         return false;
@@ -62,24 +63,13 @@ class ProjectManager {
         const project = this.findProjectByName(name);
         if (project) {
             this.currentProject = project;
+            saveProjects(this.projects);
         }
     }
 
     getCurrentProject() {
         return this.currentProject;
     }
-
-
-    // Placeholder for future localStorage methods
-    // saveProjects() {
-    //     localStorage.setItem('projects', JSON.stringify(this.projects));
-    // }
-
-    // loadProjects() {
-    //     const projects = localStorage.getItem('projects');
-    //     return projects ? JSON.parse(projects).map(projData => new Project(projData.name)) : null;
-    // }
-
 }
 
 export default ProjectManager;
