@@ -67,19 +67,15 @@ class TodoApp {
     
     renderProjects() {
         const projectContainer = document.getElementById('project-list');
-        projectContainer.innerHTML = '';
-        this.projectManager.getProjects().forEach(project => {
-            const projectElement = document.createElement('li');
-            projectElement.className = project === this.currentProject ? 'active' : '';
-            projectElement.innerHTML = `
-               <span class="project-name">${project.name}</span>
+        projectContainer.innerHTML = this.projectManager.getProjects().map(project => `
+            <li class="${project === this.currentProject ? 'active' : ''}">
+                <span class="project-name">${project.name}</span>
                 <div class="project-actions">
                     <button class="edit-project"><i class="fas fa-edit"></i></button>
                     <button class="delete-project"><i class="fas fa-trash-alt"></i></button>
                 </div>
-            `;
-            projectContainer.appendChild(projectElement);
-        });
+            </li>
+        `).join('');
         this.updateProjectHeader();
     }
 
@@ -290,12 +286,9 @@ class TodoApp {
 
     renderTodos() {
         const todoContainer = document.getElementById('todo-list');
-        todoContainer.innerHTML = '';
         if (this.currentProject) {
-            this.currentProject.getTodos().forEach(todo => {
-                const todoElement = document.createElement('li');
-                todoElement.className = `todo-item ${todo.completed ? 'completed' : ''}`;
-                todoElement.innerHTML = `
+            todoContainer.innerHTML = this.currentProject.getTodos().map(todo => `
+                <li class="todo-item ${todo.completed ? 'completed' : ''}">
                     <label class="priority-circle ${todo.priority}">
                         <input type="checkbox" class="mark-complete" ${todo.completed ? 'checked' : ''}>
                     </label>
@@ -308,11 +301,13 @@ class TodoApp {
                         <button class="edit-todo"><i class="fas fa-edit"></i></button>
                         <button class="delete-todo"><i class="fas fa-trash-alt"></i></button>
                     </div>
-                `;
-                todoContainer.appendChild(todoElement);
-            });
+                </li>
+            `).join('');
+        } else {
+            todoContainer.innerHTML = ''; // Clear the container if no current project
         }
     }
+    
 }
 
 // Initialize the TodoApp when the DOM is fully loaded
