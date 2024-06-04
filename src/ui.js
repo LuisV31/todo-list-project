@@ -1,7 +1,7 @@
-import ProjectManager from './logic/projectManager.js';
-import Project from './logic/Project.js';
-import Todo from './logic/Todo.js';
-import { saveProjects } from './storage.js'; // Import the saveProjects function
+import ProjectManager from './logic/projectManager';
+import Project from './logic/Project';
+import Todo from './logic/Todo';
+import { saveProjects } from './storage'; // Import the saveProjects function
 
 class TodoApp {
   constructor() {

@@ -1,5 +1,5 @@
 import Project from './Project';
-import { saveProjects, loadProjects } from '../storage.js';
+import { saveProjects, loadProjects } from '../storage';
 
 class ProjectManager {
   constructor() {
